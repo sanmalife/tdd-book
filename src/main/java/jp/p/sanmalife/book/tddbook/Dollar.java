@@ -2,8 +2,6 @@ package jp.p.sanmalife.book.tddbook;
 
 public class Dollar extends Money {
 
-    private int amount;
-
     public Dollar(int amount) {
         this.amount = amount;
     }
