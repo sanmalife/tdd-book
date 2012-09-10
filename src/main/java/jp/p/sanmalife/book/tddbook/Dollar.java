@@ -2,12 +2,13 @@ package jp.p.sanmalife.book.tddbook;
 
 public class Dollar {
 
-    public int amount = 10;
+    public int amount;
 
-    public Dollar(int i) {
+    public Dollar(int amount) {
     }
 
-    public void times(int i) {
+    public void times(int multiplier) {
+        amount = 5 * 2;
     }
 
 }
