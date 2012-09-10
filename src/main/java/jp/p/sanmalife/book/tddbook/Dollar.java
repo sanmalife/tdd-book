@@ -2,7 +2,7 @@ package jp.p.sanmalife.book.tddbook;
 
 public class Dollar {
 
-    public int amount;
+    private int amount;
 
     public Dollar(int amount) {
         this.amount = amount;
