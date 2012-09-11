@@ -11,7 +11,7 @@
  □nullとの等価性
  □オブジェクトとの等価性
  □DollarとFrancの重複
- □timesの一般化
+ ■timesの一般化
  ■FrancとDollarの比較
  ■通貨
  □FrancのTestMultiplicationの削除

@@ -10,15 +10,8 @@ class Money {
         this.currency = currency;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        Money money = (Money) obj;
-        return amount == money.amount && currency.equals(money.currency);
-    }
-
-    Money times(int multiplier) {
-        // TODO: 仮実装
-        return null;
+    public Money times(int multiplier) {
+        return new Money(amount * multiplier, currency);
     }
 
     public static Money dollar(int amount) {
@@ -31,6 +24,12 @@ class Money {
 
     protected String currency() {
         return currency;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Money money = (Money) obj;
+        return amount == money.amount && currency.equals(money.currency);
     }
 
     @Override
