@@ -1,6 +1,6 @@
 package jp.p.sanmalife.book.tddbook;
 
-abstract class Money {
+class Money {
 
     protected int amount;
     protected String currency;
@@ -16,7 +16,10 @@ abstract class Money {
         return amount == money.amount && getClass().equals(money.getClass());
     }
 
-    abstract Money times(int multiplier);
+    Money times(int multiplier) {
+        // TODO: 仮実装
+        return null;
+    }
 
     public static Money dollar(int amount) {
         return new Dollar(amount, "USD");
