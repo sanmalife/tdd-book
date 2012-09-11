@@ -27,4 +27,8 @@ public class DollarTest {
         assertEquals("CHF", Money.franc(1).currency());
     }
 
+    @Test
+    public void testDifferentClassEquality() throws Exception {
+        assertTrue(new Money(1, "CHF").equals(new Franc(1, "CHF")));
+    }
 }
