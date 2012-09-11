@@ -14,11 +14,11 @@ abstract class Money {
     abstract Money times(int multiplier);
 
     public static Money dollar(int amount) {
-        return new Dollar(amount);
+        return new Dollar(amount, "USD");
     }
 
     public static Money franc(int amount) {
-        return new Franc(amount);
+        return new Franc(amount, "CHF");
     }
 
     protected String currency() {
