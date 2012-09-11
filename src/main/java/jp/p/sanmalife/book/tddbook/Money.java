@@ -1,6 +1,6 @@
 package jp.p.sanmalife.book.tddbook;
 
-public class Money {
+abstract class Money {
 
     protected int amount;
 
@@ -9,5 +9,11 @@ public class Money {
         Money money = (Money) obj;
         return amount == money.amount && getClass().equals(money.getClass());
     }
+
+    public static Money dollar(int amount) {
+        return new Dollar(amount);
+    }
+
+    abstract Money times(int multiplier);
 
 }
