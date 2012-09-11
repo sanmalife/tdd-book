@@ -3,6 +3,7 @@ package jp.p.sanmalife.book.tddbook;
 abstract class Money {
 
     protected int amount;
+    protected String currency;
 
     @Override
     public boolean equals(Object obj) {
@@ -20,6 +21,8 @@ abstract class Money {
         return new Franc(amount);
     }
 
-    abstract String currency();
+    protected String currency() {
+        return currency;
+    }
 
 }
