@@ -2,8 +2,8 @@ package jp.p.sanmalife.book.tddbook;
 
 class Money {
 
-    protected int amount;
-    protected String currency;
+    private int amount;
+    private String currency;
 
     public Money(int amount, String currency) {
         this.amount = amount;
