@@ -2,8 +2,9 @@ package jp.p.sanmalife.book.tddbook;
 
 public class Bank {
 
-    public Money reduce(Expression sum, String currency) {
-        return Money.dollar(10);
+    public Money reduce(Expression source, String currency) {
+        Sum sum = (Sum) source;
+        int amount = sum.addend.amount + sum.augend.amount;
+        return new Money(amount, currency);
     }
-
 }
