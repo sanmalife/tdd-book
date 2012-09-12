@@ -1,6 +1,6 @@
 package jp.p.sanmalife.book.tddbook;
 
-class Money {
+class Money implements Expression {
 
     private int amount;
     private String currency;
@@ -37,7 +37,7 @@ class Money {
         return amount + " " + currency;
     }
 
-    public Money plus(Money addend) {
+    public Expression plus(Money addend) {
         return new Money(amount + addend.amount, currency);
     }
 
