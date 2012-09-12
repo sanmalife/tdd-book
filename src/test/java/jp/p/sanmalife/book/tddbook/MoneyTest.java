@@ -38,4 +38,12 @@ public class MoneyTest {
         Money reduced = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(10), reduced);
     }
+
+    @Test
+    public void testReduceSum() throws Exception {
+        Expression sum = new Sum(Money.dollar(3), Money.dollar(4));
+        Bank bank = new Bank();
+        Money result = bank.reduce(sum, "reduce");
+        assertEquals(Money.dollar(7), result);
+    }
 }
