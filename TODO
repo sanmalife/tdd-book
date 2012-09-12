@@ -3,7 +3,8 @@
  □レートが2：1の場合、$5+10CHF = $10
  □$5+$5 = $10
  □$5+$5からMoneyの返却
- □Bank.reduce(Money)
+ ■Bank.reduce(Money)
+ □通貨交換によるMoneyの交換
  ■$5*2=$10
  ■5CHF*2=10CHF
  ■amountのプライベート化
