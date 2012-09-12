@@ -62,4 +62,16 @@ public class MoneyTest {
         assertEquals(five, sum.addend);
     }
 
+    /**
+     * SumをreduceするとMoneyになる
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void testReduceSum() throws Exception {
+        Sum sum = new Sum(Money.dollar(4), Money.dollar(3));
+        Bank bank = new Bank();
+        Money result = bank.reduce(sum, "USD");
+        assertEquals(Money.dollar(7), result);
+    }
 }

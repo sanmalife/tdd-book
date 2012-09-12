@@ -2,7 +2,7 @@ package jp.p.sanmalife.book.tddbook;
 
 class Money implements Expression {
 
-    private int amount;
+    int amount;
     private String currency;
 
     public Money(int amount, String currency) {
