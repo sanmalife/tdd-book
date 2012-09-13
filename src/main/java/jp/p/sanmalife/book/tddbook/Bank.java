@@ -6,4 +6,7 @@ public class Bank {
         return source.reduce(to);
     }
 
+    public void addRate(String string, String string2, int i) {
+    }
+
 }
