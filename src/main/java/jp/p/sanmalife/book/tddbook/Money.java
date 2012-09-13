@@ -2,8 +2,8 @@ package jp.p.sanmalife.book.tddbook;
 
 class Money implements Expression {
 
-    protected int amount;
-    protected String currency;
+    int amount;
+    private String currency;
 
     public Money(int amount, String currency) {
         this.amount = amount;
@@ -26,6 +26,15 @@ class Money implements Expression {
         return currency;
     }
 
+    public Expression plus(Money addend) {
+        return new Sum(this, addend);
+    }
+
+    @Override
+    public Money reduce(String to) {
+        return this;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Money money = (Money) obj;
@@ -35,14 +44,6 @@ class Money implements Expression {
     @Override
     public String toString() {
         return amount + " " + currency;
-    }
-
-    public Expression plus(Money added) {
-        return new Sum(this, added);
-    }
-
-    public Money reduce(String to) {
-        return this;
     }
 
 }
