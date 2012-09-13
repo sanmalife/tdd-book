@@ -68,10 +68,20 @@ public class MoneyTest {
      * @throws Exception
      */
     @Test
-    public void testReduceSum() throws Exception {
+    public void testReduceSum() {
         Sum sum = new Sum(Money.dollar(4), Money.dollar(3));
         Bank bank = new Bank();
         Money result = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(7), result);
+    }
+
+    /**
+     * Sum#reduceの戻り値はモデル型であること
+     */
+    @Test
+    public void testReduceMoney() {
+        Bank bank = new Bank();
+        Money result = bank.reduce(Money.dollar(1), "USD");
+        assertEquals(Money.dollar(1), result);
     }
 }
