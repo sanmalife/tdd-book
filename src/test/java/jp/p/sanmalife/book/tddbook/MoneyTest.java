@@ -42,12 +42,25 @@ public class MoneyTest {
      * 同一通貨同士の加算
      */
     @Test
-    public void testSimpleAddition2() {
+    public void testSimpleAddition() {
         Money five = Money.dollar(5);
         Expression sum = five.plus(five);
         Bank bank = new Bank();
         Money reduced = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(10), reduced);
+    }
+
+    /**
+     * 異なる通貨同士の加算
+     */
+    @Test
+    public void testMixedAddition() {
+        Money fiveBucks = Money.dollar(5);
+        Money tenFrancs = Money.franc(10);
+        Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        Money result = bank.reduce(fiveBucks.plus(tenFrancs), "USD");
+        assertEquals(Money.dollar(10), result);
     }
 
     /**
