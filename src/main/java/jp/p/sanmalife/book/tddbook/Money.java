@@ -10,11 +10,6 @@ class Money implements Expression {
         this.currency = currency;
     }
 
-    @Override
-    public Expression times(int multiplier) {
-        return new Money(amount * multiplier, currency);
-    }
-
     public static Money dollar(int amount) {
         return new Money(amount, "USD");
     }
@@ -30,6 +25,11 @@ class Money implements Expression {
     @Override
     public Expression plus(Expression addend) {
         return new Sum(this, addend);
+    }
+
+    @Override
+    public Expression times(int multiplier) {
+        return new Money(amount * multiplier, currency);
     }
 
     @Override
