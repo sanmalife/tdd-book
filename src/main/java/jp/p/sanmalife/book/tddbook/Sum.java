@@ -4,9 +4,9 @@ public class Sum implements Expression {
     Expression augend; // 被加数
     Expression addend; // 加数
 
-    public Sum(Expression augend, Expression added) {
+    public Sum(Expression augend, Expression addend) {
         this.augend = augend;
-        this.addend = added;
+        this.addend = addend;
     }
 
     public Money reduce(Bank bank, String to) {
@@ -17,8 +17,7 @@ public class Sum implements Expression {
 
     @Override
     public Expression plus(Expression addend) {
-        // TODO
-        return null;
+        return new Sum(this, addend);
     }
 
     @Override
