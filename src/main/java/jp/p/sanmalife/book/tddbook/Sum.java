@@ -22,7 +22,6 @@ public class Sum implements Expression {
 
     @Override
     public Expression times(int multiplier) {
-        // TODO
-        return null;
+        return new Sum(augend.times(multiplier), addend.times(multiplier));
     }
 }
