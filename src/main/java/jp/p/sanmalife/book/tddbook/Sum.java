@@ -14,4 +14,16 @@ public class Sum implements Expression {
                 + augend.reduce(bank, to).amount;
         return new Money(amount, to);
     }
+
+    @Override
+    public Expression plus(Expression addend) {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public Expression times(int multiplier) {
+        // TODO
+        return null;
+    }
 }
