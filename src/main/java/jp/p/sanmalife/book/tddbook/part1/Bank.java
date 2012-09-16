@@ -1,4 +1,4 @@
-package jp.p.sanmalife.book.tddbook;
+package jp.p.sanmalife.book.tddbook.part1;
 
 import java.util.Hashtable;
 

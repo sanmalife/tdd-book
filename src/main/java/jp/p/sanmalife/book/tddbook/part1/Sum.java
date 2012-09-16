@@ -1,4 +1,4 @@
-package jp.p.sanmalife.book.tddbook;
+package jp.p.sanmalife.book.tddbook.part1;
 
 public class Sum implements Expression {
     Expression augend; // 被加数

@@ -1,4 +1,4 @@
-package jp.p.sanmalife.book.tddbook;
+package jp.p.sanmalife.book.tddbook.part1;
 
 public interface Expression {
     Money reduce(Bank bank, String to);

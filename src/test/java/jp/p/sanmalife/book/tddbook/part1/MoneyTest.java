@@ -1,8 +1,11 @@
-package jp.p.sanmalife.book.tddbook;
+package jp.p.sanmalife.book.tddbook.part1;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import jp.p.sanmalife.book.tddbook.part1.Bank;
+import jp.p.sanmalife.book.tddbook.part1.Expression;
+import jp.p.sanmalife.book.tddbook.part1.Sum;
 
 import org.junit.Test;
 
