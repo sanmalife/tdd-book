@@ -36,6 +36,6 @@ public class TestCase {
             e.printStackTrace();
         }
 
-        return new TestResult();
+        return result;
     }
 }
