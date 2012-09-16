@@ -8,16 +8,14 @@ package jp.p.sanmalife.book.tddbook.part2;
  */
 public class WasRun extends TestCase {
 
-    public boolean wasRun;
-    public boolean wasSetUp;
+    public boolean wasRun = false;
+    public boolean wasSetUp = false;
 
     public WasRun(String name) {
         super(name);
-        wasSetUp = false;
     }
 
     public void setUp() {
-        wasRun = false;
         wasSetUp = true;
     }
 
