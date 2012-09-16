@@ -1,6 +1,5 @@
 package jp.p.sanmalife.book.tddbook.part2;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -32,16 +31,9 @@ public class TestCase {
             method = clzz.getMethod(name, null);
             method.invoke(this, null);
             tearDown();
-        } catch (SecurityException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            new RuntimeException();
         }
 
         return new TestResult();

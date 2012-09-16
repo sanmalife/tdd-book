@@ -29,4 +29,8 @@ public class WasRun extends TestCase {
         wasRun = true;
         log += "testMethod ";
     }
+
+    public void testBrokenMethod() {
+        throw new RuntimeException("testBrokenMethod");
+    }
 }

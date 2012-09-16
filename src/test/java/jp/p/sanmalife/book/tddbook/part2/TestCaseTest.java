@@ -30,8 +30,15 @@ public class TestCaseTest extends TestCase {
         assertEquals("1 run, 0 failed", result.summary());
     }
 
+    public void testFailedResult() {
+        WasRun test = new WasRun("testBrokenMethod");
+        TestResult result = test.run();
+        assertEquals("1 run, 0 failed", result.summary());
+    }
+
     public static void main(String[] args) {
         new TestCaseTest("testTemplateMethod").run();
+        new TestCaseTest("testFailedResult").run();
         System.out.println("Test End.");
     }
 
