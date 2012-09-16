@@ -1,14 +1,12 @@
 package jp.p.sanmalife.book.tddbook.part2;
 
-import java.lang.reflect.Method;
 
-public class WasRun {
+public class WasRun extends TestCase {
 
     public boolean wasRun;
-    private String name;
 
     public WasRun(String name) {
-        this.name = name;
+        super(name);
         wasRun = false;
     }
 
@@ -16,13 +14,4 @@ public class WasRun {
         wasRun = true;
     }
 
-    public void run() {
-        try {
-            Class clzz = this.getClass();
-            Method method = clzz.getMethod(name, null);
-            method.invoke(this, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
