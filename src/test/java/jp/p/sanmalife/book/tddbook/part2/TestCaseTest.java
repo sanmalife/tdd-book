@@ -9,7 +9,6 @@ import static org.junit.Assert.assertEquals;
  * 
  */
 public class TestCaseTest extends TestCase {
-    private WasRun test;
 
     public TestCaseTest(String name) {
         super(name);
@@ -17,10 +16,10 @@ public class TestCaseTest extends TestCase {
 
     @Override
     public void setUp() {
-        test = new WasRun("testMethod");
     }
 
     public void testTemplateMethod() {
+        WasRun test = new WasRun("testMethod");
         test.run();
         assertEquals("setUp testMethod ", test.log);
     }
