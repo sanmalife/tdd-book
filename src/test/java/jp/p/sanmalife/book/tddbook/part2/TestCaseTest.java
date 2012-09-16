@@ -1,5 +1,6 @@
 package jp.p.sanmalife.book.tddbook.part2;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -27,7 +28,7 @@ public class TestCaseTest extends TestCase {
 
     public void testSetUp() {
         test.run();
-        assertTrue(test.wasSetUp);
+        assertEquals("setUp ", test.log);
     }
 
     public static void main(String[] args) {
