@@ -12,4 +12,8 @@ public class WasRun {
         wasRun = true;
     }
 
+    public void run() {
+        testMethod();
+    }
+
 }

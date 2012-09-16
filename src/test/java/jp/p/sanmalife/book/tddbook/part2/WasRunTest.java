@@ -10,7 +10,7 @@ public class WasRunTest {
     public void testTestMethod() {
         WasRun test = new WasRun("testMethod");
         assertEquals(false, test.wasRun);
-        test.testMethod();
+        test.run();
         assertEquals(true, test.wasRun);
     }
 
