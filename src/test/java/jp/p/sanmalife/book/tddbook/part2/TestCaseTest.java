@@ -1,6 +1,5 @@
 package jp.p.sanmalife.book.tddbook.part2;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -10,20 +9,23 @@ import static org.junit.Assert.assertTrue;
  * 
  */
 public class TestCaseTest extends TestCase {
+    private WasRun test;
 
     public TestCaseTest(String name) {
         super(name);
     }
 
+    @Override
+    public void setUp() {
+        test = new WasRun("testMethod");
+    }
+
     public void testRunning() {
-        WasRun test = new WasRun("testMethod");
-        assertFalse(test.wasRun);
         test.run();
         assertTrue(test.wasRun);
     }
 
     public void testSetUp() {
-        WasRun test = new WasRun("testMethod");
         test.run();
         assertTrue(test.wasSetUp);
     }
@@ -31,6 +33,7 @@ public class TestCaseTest extends TestCase {
     public static void main(String[] args) {
         new TestCaseTest("testRunning").run();
         new TestCaseTest("testSetUp").run();
+        System.out.println("Test End.");
     }
 
 }

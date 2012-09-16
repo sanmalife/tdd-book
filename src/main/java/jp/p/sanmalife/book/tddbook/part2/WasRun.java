@@ -13,8 +13,12 @@ public class WasRun extends TestCase {
 
     public WasRun(String name) {
         super(name);
-        wasRun = false;
         wasSetUp = false;
+    }
+
+    public void setUp() {
+        wasRun = false;
+        wasSetUp = true;
     }
 
     public void testMethod() {

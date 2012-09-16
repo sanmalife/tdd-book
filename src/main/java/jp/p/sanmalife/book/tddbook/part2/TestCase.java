@@ -16,11 +16,15 @@ public class TestCase {
         this.name = name;
     }
 
+    public void setUp() {
+    }
+
     public void run() {
         Class clzz = this.getClass();
         Method method;
 
         try {
+            setUp();
             method = clzz.getMethod(name, null);
             method.invoke(this, null);
         } catch (SecurityException e) {
