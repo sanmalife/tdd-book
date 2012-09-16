@@ -2,6 +2,12 @@ package jp.p.sanmalife.book.tddbook.part2;
 
 import java.lang.reflect.Method;
 
+/**
+ * テストケース。テストドライバ
+ * 
+ * @author kozai.takeshi
+ * 
+ */
 public class TestCase {
     private String name;
 
