@@ -26,8 +26,7 @@ public class TestCaseTest extends TestCase {
     }
 
     public static void main(String[] args) {
-        new TestCaseTest("testRunning").run();
-        new TestCaseTest("testSetUp").run();
+        new TestCaseTest("testTemplateMethod").run();
         System.out.println("Test End.");
     }
 
