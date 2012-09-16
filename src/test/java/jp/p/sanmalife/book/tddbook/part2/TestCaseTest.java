@@ -33,12 +33,20 @@ public class TestCaseTest extends TestCase {
     public void testFailedResult() {
         WasRun test = new WasRun("testBrokenMethod");
         TestResult result = test.run();
-        assertEquals("1 run, 0 failed", result.summary());
+        assertEquals("1 run, 1 failed", result.summary());
     }
 
-    public static void main(String[] args) {
+    public void testFailedResultFormatting() {
+        TestResult result = new TestResult();
+        result.testStarted();
+        result.testFailed();
+        assertEquals("1 run, 1 failed", result.summary());
+    }
+
+    public static void main(String[] args) throws Exception {
         new TestCaseTest("testTemplateMethod").run();
         new TestCaseTest("testFailedResult").run();
+        new TestCaseTest("testFailedResultFormatting").run();
         System.out.println("Test End.");
     }
 

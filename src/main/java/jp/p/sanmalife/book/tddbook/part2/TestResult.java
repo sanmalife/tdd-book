@@ -7,6 +7,9 @@ public class TestResult {
         runCount++;
     }
 
+    public void testFailed() {
+    }
+
     public String summary() {
         return String.format("%d run, 0 failed", runCount);
     }
