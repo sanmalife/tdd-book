@@ -20,7 +20,7 @@ public class TestCaseTest extends TestCase {
         test = new WasRun("testMethod");
     }
 
-    public void testSetUp() {
+    public void testTemplateMethod() {
         test.run();
         assertEquals("setUp testMethod ", test.log);
     }
