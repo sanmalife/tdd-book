@@ -22,7 +22,7 @@ public class TestCase {
     public void tearDown() {
     }
 
-    public void run() {
+    public TestResult run() {
         Class clzz = this.getClass();
         Method method;
 
@@ -43,5 +43,6 @@ public class TestCase {
             e.printStackTrace();
         }
 
+        return new TestResult();
     }
 }

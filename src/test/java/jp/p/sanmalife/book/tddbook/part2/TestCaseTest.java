@@ -24,6 +24,12 @@ public class TestCaseTest extends TestCase {
         assertEquals("setUp testMethod tearDown ", test.log);
     }
 
+    public void testResult() {
+        WasRun test = new WasRun("testMethod");
+        TestResult result = test.run();
+        assertEquals("1 run, 0 failed", result.summary());
+    }
+
     public static void main(String[] args) {
         new TestCaseTest("testTemplateMethod").run();
         System.out.println("Test End.");
