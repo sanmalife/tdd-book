@@ -1,5 +1,6 @@
 package jp.p.sanmalife.book.tddbook.part2;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -18,11 +19,21 @@ public class TestCase {
     public void run() {
         Class clzz = this.getClass();
         Method method;
+
         try {
             method = clzz.getMethod(name, null);
             method.invoke(this, null);
-        } catch (Exception e) {
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+
     }
 }

@@ -1,5 +1,8 @@
 package jp.p.sanmalife.book.tddbook.part2;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
  * TestCaseでテストが呼び出されることを確認するテスト
  * 
@@ -14,13 +17,20 @@ public class TestCaseTest extends TestCase {
 
     public void testRunning() {
         WasRun test = new WasRun("testMethod");
-        assert (!test.wasRun);
+        assertFalse(test.wasRun);
         test.run();
-        assert (test.wasRun);
+        assertTrue(test.wasRun);
+    }
+
+    public void testSetUp() {
+        WasRun test = new WasRun("testMethod");
+        test.run();
+        assertTrue(test.wasSetUp);
     }
 
     public static void main(String[] args) {
         new TestCaseTest("testRunning").run();
+        new TestCaseTest("testSetUp").run();
     }
 
 }

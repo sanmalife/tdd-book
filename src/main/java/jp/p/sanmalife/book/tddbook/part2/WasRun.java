@@ -9,10 +9,12 @@ package jp.p.sanmalife.book.tddbook.part2;
 public class WasRun extends TestCase {
 
     public boolean wasRun;
+    public boolean wasSetUp;
 
     public WasRun(String name) {
         super(name);
         wasRun = false;
+        wasSetUp = false;
     }
 
     public void testMethod() {
