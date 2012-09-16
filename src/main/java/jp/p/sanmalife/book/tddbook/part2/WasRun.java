@@ -9,6 +9,7 @@ public class WasRun {
     }
 
     public void testMethod() {
+        wasRun = true;
     }
 
 }
