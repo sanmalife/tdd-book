@@ -1,7 +1,6 @@
 package jp.p.sanmalife.book.tddbook.part2;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * TestCaseでテストが呼び出されることを確認するテスト
@@ -21,14 +20,9 @@ public class TestCaseTest extends TestCase {
         test = new WasRun("testMethod");
     }
 
-    public void testRunning() {
-        test.run();
-        assertTrue(test.wasRun);
-    }
-
     public void testSetUp() {
         test.run();
-        assertEquals("setUp ", test.log);
+        assertEquals("setUp testMethod ", test.log);
     }
 
     public static void main(String[] args) {
