@@ -25,7 +25,8 @@ public class TestCase {
     public TestResult run() {
         Class clzz = this.getClass();
         Method method;
-
+        TestResult result = new TestResult();
+        result.testStarted();
         try {
             setUp();
             method = clzz.getMethod(name, null);
