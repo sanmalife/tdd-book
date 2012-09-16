@@ -21,7 +21,7 @@ public class TestCaseTest extends TestCase {
     public void testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
         test.run();
-        assertEquals("setUp testMethod ", test.log);
+        assertEquals("setUp testMethod tearDown ", test.log);
     }
 
     public static void main(String[] args) {
