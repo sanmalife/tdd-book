@@ -21,10 +21,9 @@ public class TestCase {
     public void tearDown() {
     }
 
-    public TestResult run() {
+    public TestResult run(TestResult result) {
         Class clzz = this.getClass();
         Method method;
-        TestResult result = new TestResult();
         result.testStarted();
         setUp();
         try {

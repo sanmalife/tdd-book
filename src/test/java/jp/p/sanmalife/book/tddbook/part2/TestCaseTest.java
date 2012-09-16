@@ -20,19 +20,21 @@ public class TestCaseTest extends TestCase {
 
     public void testTemplateMethod() {
         WasRun test = new WasRun("testMethod");
-        test.run();
+        test.run(new TestResult());
         assertEquals("setUp testMethod tearDown ", test.log);
     }
 
     public void testResult() {
         WasRun test = new WasRun("testMethod");
-        TestResult result = test.run();
+        TestResult result = new TestResult();
+        test.run(result);
         assertEquals("1 run, 0 failed", result.summary());
     }
 
     public void testFailedResult() {
         WasRun test = new WasRun("testBrokenMethod");
-        TestResult result = test.run();
+        TestResult result = new TestResult();
+        test.run(result);
         assertEquals("1 run, 1 failed", result.summary());
     }
 
@@ -47,17 +49,21 @@ public class TestCaseTest extends TestCase {
         TestSuite suite = new TestSuite();
         suite.add(new WasRun("testMethod"));
         suite.add(new WasRun("testBrokenMethod"));
-        TestResult result = suite.run();
+        TestResult result = new TestResult();
+        suite.run(result);
         assertEquals("2 run, 1 failed", result.summary());
     }
 
     public static void main(String[] args) throws Exception {
-        new TestCaseTest("testTemplateMethod").run();
-        new TestCaseTest("testResult").run();
-        new TestCaseTest("testFailedResult").run();
-        new TestCaseTest("testFailedResultFormatting").run();
-        new TestCaseTest("testSuite").run();
-        System.out.println("Test End.");
+        TestSuite suite = new TestSuite();
+        suite.add(new TestCaseTest("testTemplateMethod"));
+        suite.add(new TestCaseTest("testResult"));
+        suite.add(new TestCaseTest("testFailedResult"));
+        suite.add(new TestCaseTest("testFailedResultFormatting"));
+        suite.add(new TestCaseTest("testSuite"));
+        TestResult result = new TestResult();
+        suite.run(result);
+        System.out.println(result.summary());
     }
 
 }
