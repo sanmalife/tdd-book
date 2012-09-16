@@ -19,6 +19,9 @@ public class TestCase {
     public void setUp() {
     }
 
+    public void tearDown() {
+    }
+
     public void run() {
         Class clzz = this.getClass();
         Method method;
@@ -27,6 +30,7 @@ public class TestCase {
             setUp();
             method = clzz.getMethod(name, null);
             method.invoke(this, null);
+            tearDown();
         } catch (SecurityException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
