@@ -26,14 +26,14 @@ public class TestCase {
         Method method;
         TestResult result = new TestResult();
         result.testStarted();
+        setUp();
         try {
-            setUp();
             method = clzz.getMethod(name, null);
             method.invoke(this, null);
             tearDown();
         } catch (Exception e) {
+            result.testFailed();
             e.printStackTrace();
-            new RuntimeException();
         }
 
         return new TestResult();
