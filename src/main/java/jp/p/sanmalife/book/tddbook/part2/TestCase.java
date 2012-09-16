@@ -1,6 +1,5 @@
 package jp.p.sanmalife.book.tddbook.part2;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class TestCase {
