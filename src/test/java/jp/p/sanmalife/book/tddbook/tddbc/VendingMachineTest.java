@@ -41,6 +41,14 @@ public class VendingMachineTest {
     }
 
     @Test
+    public void 払い戻し操作を連続で行うと2回目は空のリストが返る() throws Exception {
+        vendingMachine.insert(10);
+        vendingMachine.refund();
+        vendingMachine.refund();
+        assertEquals(Collections.EMPTY_LIST, vendingMachine.refund());
+    }
+
+    @Test
     public void 複数回お金を投入した状態で払い戻し操作を行うと投入したお金のリストを返す() throws Exception {
         vendingMachine.insert(10);
         vendingMachine.insert(50);

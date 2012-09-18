@@ -35,7 +35,9 @@ public class VendingMachine {
      */
     public List<Integer> refund() {
         totalAmount = 0;
-        return insertedMoney;
+        ArrayList<Integer> changeList = insertedMoney;
+        insertedMoney = new ArrayList<Integer>();
+        return changeList;
     }
 
 }
