@@ -12,9 +12,8 @@ import java.util.List;
 public class VendingMachine {
 
     /**
-     * 投入金額の総計
+     * 投入されたお金のリスト
      */
-    public int totalAmount;
     private ArrayList<Integer> insertedMoney = new ArrayList<Integer>();
 
     /**
@@ -24,7 +23,6 @@ public class VendingMachine {
      *            投入する金額
      */
     public void insert(int money) {
-        totalAmount += money;
         insertedMoney.add(money);
     }
 
@@ -34,10 +32,17 @@ public class VendingMachine {
      * @return つり銭
      */
     public List<Integer> refund() {
-        totalAmount = 0;
         ArrayList<Integer> changeList = insertedMoney;
         insertedMoney = new ArrayList<Integer>();
         return changeList;
+    }
+
+    public int getTotalAmount() {
+        int amount = 0;
+        for (Integer money : insertedMoney) {
+            amount += money;
+        }
+        return amount;
     }
 
 }

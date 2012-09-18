@@ -14,7 +14,7 @@ public class VendingMachineTest {
 
     @Test
     public void 初期状態の時_投入金額の総計は0円() {
-        assertEquals(0, vendingMachine.totalAmount);
+        assertEquals(0, vendingMachine.getTotalAmount());
     }
 
     @Before
@@ -25,14 +25,14 @@ public class VendingMachineTest {
     @Test
     public void お金を1回投入すると投入金額の総計が増加する() {
         vendingMachine.insert(10);
-        assertEquals(10, vendingMachine.totalAmount);
+        assertEquals(10, vendingMachine.getTotalAmount());
     }
 
     @Test
     public void お金を2回投入すると投入金額の総計は2回の投入金額の合計になる() {
         vendingMachine.insert(10);
         vendingMachine.insert(50);
-        assertEquals(60, vendingMachine.totalAmount);
+        assertEquals(60, vendingMachine.getTotalAmount());
     }
 
     @Test
@@ -59,6 +59,6 @@ public class VendingMachineTest {
     public void 払い戻し操作を行うと総計は0円になる() throws Exception {
         vendingMachine.insert(10);
         vendingMachine.refund();
-        assertEquals(0, vendingMachine.totalAmount);
+        assertEquals(0, vendingMachine.getTotalAmount());
     }
 }
