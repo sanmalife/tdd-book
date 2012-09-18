@@ -2,6 +2,7 @@ package jp.p.sanmalife.book.tddbook.tddbc;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Before;
@@ -37,5 +38,12 @@ public class VendingMachineTest {
     @Test
     public void 初期状態で払い戻し操作を行うとつり銭として空リストを返す() throws Exception {
         assertEquals(Collections.EMPTY_LIST, vendingMachine.refund());
+    }
+
+    @Test
+    public void 複数回お金を投入した状態で払い戻し操作を行うと投入したお金のリストを返す() throws Exception {
+        vendingMachine.insert(10);
+        vendingMachine.insert(50);
+        assertEquals(Arrays.asList(10, 50), vendingMachine.refund());
     }
 }

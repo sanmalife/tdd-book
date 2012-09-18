@@ -15,6 +15,7 @@ public class VendingMachine {
      * 投入金額の総計
      */
     public int totalAmount;
+    private ArrayList<Integer> insertedMoney = new ArrayList<Integer>();
 
     /**
      * お金を投入する
@@ -24,6 +25,7 @@ public class VendingMachine {
      */
     public void insert(int money) {
         totalAmount += money;
+        insertedMoney.add(money);
     }
 
     /**
@@ -32,7 +34,7 @@ public class VendingMachine {
      * @return つり銭
      */
     public List<Integer> refund() {
-        return new ArrayList<Integer>();
+        return insertedMoney;
     }
 
 }
