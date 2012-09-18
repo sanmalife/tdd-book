@@ -69,10 +69,17 @@ public class VendingMachineTest {
 
     @Test
     public void 扱えないお金を投入した場合は投入した金額をそのまま返す() throws Exception {
-        assertEquals(1, vendingMachine.insert(1));
-        assertEquals(5, vendingMachine.insert(5));
-        assertEquals(2000, vendingMachine.insert(2000));
-        assertEquals(5000, vendingMachine.insert(5000));
-        assertEquals(10000, vendingMachine.insert(10000));
+        int[] notAllowedMoneys = { 1, 5, 2000, 5000, 10000 };
+
+        for (int i = 0; i < notAllowedMoneys.length; i++) {
+            assertEquals(notAllowedMoneys[i],
+                    vendingMachine.insert(notAllowedMoneys[i]));
+        }
+    }
+
+    @Test
+    public void 扱えないお金を投入した場合は投入金額の総計は増加しない() throws Exception {
+        vendingMachine.insert(1);
+        assertEquals(0, vendingMachine.getTotalAmount());
     }
 }

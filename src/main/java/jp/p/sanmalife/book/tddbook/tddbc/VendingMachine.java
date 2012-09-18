@@ -30,8 +30,12 @@ public class VendingMachine {
      * @return つり銭。取り扱い可能なお金の場合は0。そうでない場合は投入金額を返す
      */
     public int insert(int money) {
+        if (!acceptMoneys.contains(money)) {
+            return money;
+        }
+
         insertedMoney.add(money);
-        return acceptMoneys.contains(money) ? 0 : money;
+        return 0;
     }
 
     /**
