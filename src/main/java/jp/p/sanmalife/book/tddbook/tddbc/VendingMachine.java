@@ -21,9 +21,11 @@ public class VendingMachine {
      * 
      * @param money
      *            投入する金額
+     * @return つり銭。取り扱い可能なお金の場合は0。そうでない場合は投入金額を返す
      */
-    public void insert(int money) {
+    public int insert(int money) {
         insertedMoney.add(money);
+        return 0;
     }
 
     /**

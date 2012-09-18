@@ -61,4 +61,9 @@ public class VendingMachineTest {
         vendingMachine.refund();
         assertEquals(0, vendingMachine.getTotalAmount());
     }
+
+    @Test
+    public void 想定内のお金が投入された場合はつり銭として0円を返す() throws Exception {
+        assertEquals(0, vendingMachine.insert(10));
+    }
 }
