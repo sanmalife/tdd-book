@@ -1,6 +1,7 @@
 package jp.p.sanmalife.book.tddbook.tddbc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,6 +11,11 @@ import java.util.List;
  * 
  */
 public class VendingMachine {
+
+    /**
+     * 扱えるお金の金額リスト
+     */
+    private List<Integer> acceptMoneys = Arrays.asList(10, 50, 100, 500, 1000);
 
     /**
      * 投入されたお金のリスト
@@ -25,7 +31,7 @@ public class VendingMachine {
      */
     public int insert(int money) {
         insertedMoney.add(money);
-        return 0;
+        return acceptMoneys.contains(money) ? 0 : money;
     }
 
     /**
@@ -39,6 +45,11 @@ public class VendingMachine {
         return changeList;
     }
 
+    /**
+     * 投入金額の総計を取得する
+     * 
+     * @return 投入金額の総計
+     */
     public int getTotalAmount() {
         int amount = 0;
         for (Integer money : insertedMoney) {
