@@ -12,14 +12,14 @@ public class VendingMachineTest {
 
     private VendingMachine vendingMachine;
 
-    @Test
-    public void 初期状態の時_投入金額の総計は0円() {
-        assertEquals(0, vendingMachine.getTotalAmount());
-    }
-
     @Before
     public void before() {
         vendingMachine = new VendingMachine();
+    }
+
+    @Test
+    public void 初期状態の時_投入金額の総計は0円() {
+        assertEquals(0, vendingMachine.getTotalAmount());
     }
 
     @Test
