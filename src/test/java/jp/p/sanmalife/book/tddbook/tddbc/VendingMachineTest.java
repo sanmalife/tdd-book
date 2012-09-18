@@ -2,6 +2,8 @@ package jp.p.sanmalife.book.tddbook.tddbc;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collections;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,5 +32,10 @@ public class VendingMachineTest {
         vendingMachine.insert(10);
         vendingMachine.insert(50);
         assertEquals(60, vendingMachine.totalAmount);
+    }
+
+    @Test
+    public void 初期状態で払い戻し操作を行うとつり銭として空リストを返す() throws Exception {
+        assertEquals(Collections.EMPTY_LIST, vendingMachine.refund());
     }
 }
