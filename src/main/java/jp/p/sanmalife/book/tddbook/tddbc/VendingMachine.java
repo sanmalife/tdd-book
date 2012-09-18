@@ -34,6 +34,7 @@ public class VendingMachine {
      * @return つり銭
      */
     public List<Integer> refund() {
+        totalAmount = 0;
         return insertedMoney;
     }
 

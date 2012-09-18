@@ -46,4 +46,11 @@ public class VendingMachineTest {
         vendingMachine.insert(50);
         assertEquals(Arrays.asList(10, 50), vendingMachine.refund());
     }
+
+    @Test
+    public void 払い戻し操作を行うと総計は0円になる() throws Exception {
+        vendingMachine.insert(10);
+        vendingMachine.refund();
+        assertEquals(0, vendingMachine.totalAmount);
+    }
 }
