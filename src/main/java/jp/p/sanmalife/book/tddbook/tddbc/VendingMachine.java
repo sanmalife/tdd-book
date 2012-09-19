@@ -26,7 +26,12 @@ public class VendingMachine {
     /**
      * 格納しているジュース
      */
-    private Stock stockJuice;
+    private Stock stock;
+
+    /**
+     * 売上金額
+     */
+    private int saleAmount;
 
     public VendingMachine() {
         storeJuice(new Stock(new Juice("コーラ", 120), 5));
@@ -78,7 +83,7 @@ public class VendingMachine {
      * @return 格納しているジュースの本数
      */
     public int getStockCount() {
-        return stockJuice.count;
+        return stock.count;
     }
 
     /**
@@ -87,7 +92,7 @@ public class VendingMachine {
      * @return
      */
     public Stock getStock() {
-        return stockJuice;
+        return stock;
     }
 
     /**
@@ -96,7 +101,7 @@ public class VendingMachine {
      * @param type
      */
     public void storeJuice(Stock stock) {
-        stockJuice = stock;
+        this.stock = stock;
     }
 
     /**
@@ -105,15 +110,32 @@ public class VendingMachine {
      * @return
      */
     public Juice getStockType() {
-        return stockJuice.type;
+        return stock.type;
     }
 
     /**
-     * ジュースを購入できるか判定する
+     * ジュースを購入できるか判定する。在庫が1以上かつ、投入金額総計が値段以上の場合購入可能。
      * 
-     * @return
+     * @return ジュースが購入できる場合true
      */
     public boolean canPurchase() {
         return getTotalAmount() >= 120 ? true : false;
+    }
+
+    /**
+     * コーラを購入する
+     */
+    public void purchase() {
+        stock.count -= 1;
+        saleAmount += stock.type.getPrice();
+    }
+
+    /**
+     * 現在の売上金額を取得する
+     * 
+     * @return 売上金額
+     */
+    public int getSaleAmount() {
+        return saleAmount;
     }
 }

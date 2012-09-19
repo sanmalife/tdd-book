@@ -31,6 +31,14 @@ public class Juice {
         this.price = price;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

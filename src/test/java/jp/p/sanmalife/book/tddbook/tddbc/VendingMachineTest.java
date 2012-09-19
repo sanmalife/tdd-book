@@ -136,4 +136,34 @@ public class VendingMachineTest {
         assertEquals(120, vendingMachine.getTotalAmount());
         assertTrue(vendingMachine.canPurchase());
     }
+
+    @Test
+    public void 初期状態でコーラを1本買うと在庫が4本になる() throws Exception {
+        vendingMachine.insert(500);
+        vendingMachine.purchase();
+        assertEquals(4, vendingMachine.getStockCount());
+    }
+
+    @Test
+    public void 初期状態でコーラを1本買うと売上金額が120円になる() throws Exception {
+        vendingMachine.insert(500);
+        vendingMachine.purchase();
+        assertEquals(120, vendingMachine.getSaleAmount());
+    }
+
+    @Test
+    public void 初期状態でコーラを2本買うと在庫が3本になる() throws Exception {
+        vendingMachine.insert(500);
+        vendingMachine.purchase();
+        vendingMachine.purchase();
+        assertEquals(3, vendingMachine.getStockCount());
+    }
+
+    @Test
+    public void 初期状態でコーラを2本買うと売上金額が240円になる() throws Exception {
+        vendingMachine.insert(500);
+        vendingMachine.purchase();
+        vendingMachine.purchase();
+        assertEquals(240, vendingMachine.getSaleAmount());
+    }
 }
