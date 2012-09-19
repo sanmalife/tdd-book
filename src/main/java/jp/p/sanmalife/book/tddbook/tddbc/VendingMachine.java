@@ -23,6 +23,15 @@ public class VendingMachine {
     private ArrayList<Integer> insertedMoney = new ArrayList<Integer>();
 
     /**
+     * 格納しているジュース
+     */
+    private Juice stockJuice;
+
+    public VendingMachine() {
+        storeJuice(new Juice("コーラ", 120));
+    }
+
+    /**
      * お金を投入する
      * 
      * @param money
@@ -77,7 +86,15 @@ public class VendingMachine {
      * @return
      */
     public Juice getStockJuice() {
-        return new Juice("コーラ", 120);
+        return stockJuice;
     }
 
+    /**
+     * ジュースを格納する
+     * 
+     * @param juice
+     */
+    public void storeJuice(Juice juice) {
+        stockJuice = juice;
+    }
 }

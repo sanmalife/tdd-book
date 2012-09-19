@@ -93,4 +93,11 @@ public class VendingMachineTest {
         Juice coke = new Juice("コーラ", 120);
         assertEquals(coke, vendingMachine.getStockJuice());
     }
+
+    @Test
+    public void レッドブルを格納するとジュースの種類がレッドブルに変化する() throws Exception {
+        Juice redBull = new Juice("レッドブル", 200);
+        vendingMachine.storeJuice(redBull);
+        assertEquals(new Juice("レッドブル", 200), vendingMachine.getStockJuice());
+    }
 }
