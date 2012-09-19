@@ -107,4 +107,13 @@ public class VendingMachine {
     public Juice getStockType() {
         return stockJuice.type;
     }
+
+    /**
+     * ジュースを購入できるか判定する
+     * 
+     * @return
+     */
+    public boolean canPurchase() {
+        return getTotalAmount() >= 120 ? true : false;
+    }
 }

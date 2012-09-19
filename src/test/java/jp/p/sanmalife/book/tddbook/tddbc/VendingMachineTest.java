@@ -1,6 +1,7 @@
 package jp.p.sanmalife.book.tddbook.tddbc;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -117,5 +118,22 @@ public class VendingMachineTest {
         Map<String, String> map2 = new HashMap<String, String>();
         map2.put("a", "b");
         assertTrue(map1.equals(map2));
+    }
+
+    @Test
+    public void 投入金額が110円の場合は購入できない() throws Exception {
+        vendingMachine.insert(100);
+        vendingMachine.insert(10);
+        assertEquals(110, vendingMachine.getTotalAmount());
+        assertFalse(vendingMachine.canPurchase());
+    }
+
+    @Test
+    public void 投入金額が120円の場合は購入できる() throws Exception {
+        vendingMachine.insert(100);
+        vendingMachine.insert(10);
+        vendingMachine.insert(10);
+        assertEquals(120, vendingMachine.getTotalAmount());
+        assertTrue(vendingMachine.canPurchase());
     }
 }
