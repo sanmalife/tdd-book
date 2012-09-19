@@ -25,10 +25,10 @@ public class VendingMachine {
     /**
      * 格納しているジュース
      */
-    private Juice stockJuice;
+    private StockJuice stockJuice;
 
     public VendingMachine() {
-        storeJuice(new Juice("コーラ", 120));
+        storeJuice(new StockJuice(new Juice("コーラ", 120), 5));
     }
 
     /**
@@ -85,7 +85,7 @@ public class VendingMachine {
      * 
      * @return
      */
-    public Juice getStockJuice() {
+    public StockJuice getStockJuice() {
         return stockJuice;
     }
 
@@ -94,7 +94,7 @@ public class VendingMachine {
      * 
      * @param juice
      */
-    public void storeJuice(Juice juice) {
-        stockJuice = juice;
+    public void storeJuice(StockJuice stock) {
+        stockJuice = stock;
     }
 }
