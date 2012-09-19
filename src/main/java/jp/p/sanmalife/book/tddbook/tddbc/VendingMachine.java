@@ -98,4 +98,13 @@ public class VendingMachine {
     public void storeJuice(Stock stock) {
         stockJuice = stock;
     }
+
+    /**
+     * 在庫のジュースの種類を取得する
+     * 
+     * @return
+     */
+    public Juice getStockType() {
+        return stockJuice.type;
+    }
 }
