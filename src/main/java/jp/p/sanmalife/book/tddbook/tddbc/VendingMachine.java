@@ -119,7 +119,8 @@ public class VendingMachine {
      * @return ジュースが購入できる場合true
      */
     public boolean canPurchase() {
-        return (getTotalAmount() >= 120) && (stock.count > 0) ? true : false;
+        return (getTotalAmount() >= stock.type.getPrice()) && (stock.count > 0) ? true
+                : false;
     }
 
     /**
