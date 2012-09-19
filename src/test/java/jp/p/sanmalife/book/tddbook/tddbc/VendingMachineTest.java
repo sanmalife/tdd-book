@@ -138,6 +138,11 @@ public class VendingMachineTest {
     }
 
     @Test
+    public void 初期状態の売上金額は0円() throws Exception {
+        assertEquals(0, vendingMachine.getSaleAmount());
+    }
+
+    @Test
     public void 在庫が0の場合は投入金額が十分でも購入できない() throws Exception {
         vendingMachine.insert(1000);
         for (int i = 0; i < 5; i++) {
