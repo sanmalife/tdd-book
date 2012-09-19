@@ -33,6 +33,13 @@ public class Juice {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(obj instanceof Juice)) {
+            return false;
+        }
         Juice juice = (Juice) obj;
         return name.equals(juice.name) && price == juice.price;
     }

@@ -88,28 +88,27 @@ public class VendingMachineTest {
 
     @Test
     public void 初期状態ではジュースを5本格納している() throws Exception {
-        assertEquals(5, vendingMachine.getStockJuice().count);
+        assertEquals(5, vendingMachine.getStock().count);
     }
 
     @Test
     public void 初期状態ではコーラを格納している() throws Exception {
         Juice coke = new Juice("コーラ", 120);
-        assertEquals(coke, vendingMachine.getStockJuice().juice);
+        assertEquals(coke, vendingMachine.getStock().type);
     }
 
     @Test
     public void レッドブルを格納するとジュースの種類がレッドブルに変化する() throws Exception {
-        Juice redBull = new Juice("レッドブル", 200);
-        StockJuice redBullStock = new StockJuice(redBull, 1);
+        Stock redBullStock = new Stock(new Juice("レッドブル", 200), 1);
         vendingMachine.storeJuice(redBullStock);
         assertEquals(new Juice("レッドブル", 200),
-                vendingMachine.getStockJuice().juice);
+                vendingMachine.getStock().type);
     }
 
     @Test
     public void 初期状態で格納されているジュースの情報を取得できる() throws Exception {
-        StockJuice fiveCoke = new StockJuice(new Juice("コーラ", 120), 5);
-        assertEquals(fiveCoke, vendingMachine.getStockJuice());
+        Stock fiveCoke = new Stock(new Juice("コーラ", 120), 5);
+        assertEquals(fiveCoke, vendingMachine.getStock());
     }
 
     @Test
