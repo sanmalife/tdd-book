@@ -1,0 +1,40 @@
+package jp.p.sanmalife.book.tddbook.tddbc;
+
+/**
+ * ジュースクラス
+ * 
+ * @author kozai.takeshi
+ * 
+ */
+public class Juice {
+
+    /**
+     * ジュースの名前
+     */
+    private String name;
+
+    /**
+     * ジュースの値段
+     */
+    private int price;
+
+    /**
+     * コンストラクタ
+     * 
+     * @param name
+     *            ジュースの名前
+     * @param price
+     *            ジュースの値段
+     */
+    public Juice(String name, int price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Juice juice = (Juice) obj;
+        return name.equals(juice.name) && price == juice.price;
+    }
+
+}

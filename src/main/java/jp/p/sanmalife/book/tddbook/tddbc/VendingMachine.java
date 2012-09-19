@@ -62,4 +62,22 @@ public class VendingMachine {
         return amount;
     }
 
+    /**
+     * 格納しているジュースの本数を取得する
+     * 
+     * @return 格納しているジュースの本数
+     */
+    public int getStockCount() {
+        return 5;
+    }
+
+    /**
+     * 格納しているジュースを返す
+     * 
+     * @return
+     */
+    public Juice getStockJuice() {
+        return new Juice("コーラ", 120);
+    }
+
 }

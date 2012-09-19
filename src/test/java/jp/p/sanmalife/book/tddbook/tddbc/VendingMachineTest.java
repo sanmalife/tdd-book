@@ -82,4 +82,15 @@ public class VendingMachineTest {
         vendingMachine.insert(1);
         assertEquals(0, vendingMachine.getTotalAmount());
     }
+
+    @Test
+    public void 初期状態ではジュースを5本格納している() throws Exception {
+        assertEquals(5, vendingMachine.getStockCount());
+    }
+
+    @Test
+    public void 初期状態ではコーラを格納している() throws Exception {
+        Juice coke = new Juice("コーラ", 120);
+        assertEquals(coke, vendingMachine.getStockJuice());
+    }
 }
