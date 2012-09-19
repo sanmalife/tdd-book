@@ -126,6 +126,9 @@ public class VendingMachine {
      * コーラを購入する
      */
     public void purchase() {
+        if (!canPurchase()) {
+            return;
+        }
         stock.count -= 1;
         saleAmount += stock.type.getPrice();
     }

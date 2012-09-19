@@ -181,4 +181,23 @@ public class VendingMachineTest {
         vendingMachine.purchase();
         assertEquals(240, vendingMachine.getSaleAmount());
     }
+
+    @Test
+    public void 購入できない場合に購入操作を行なっても投入金額が変化しない() throws Exception {
+        vendingMachine.insert(10);
+        vendingMachine.purchase();
+        assertEquals(10, vendingMachine.getTotalAmount());
+    }
+
+    @Test
+    public void 購入できない場合に購入操作を行なっても在庫が変化しない() throws Exception {
+        vendingMachine.purchase();
+        assertEquals(5, vendingMachine.getStockCount());
+    }
+
+    @Test
+    public void 購入できない場合に購入操作を行なっても売上が変化しない() throws Exception {
+        vendingMachine.purchase();
+        assertEquals(0, vendingMachine.getSaleAmount());
+    }
 }
