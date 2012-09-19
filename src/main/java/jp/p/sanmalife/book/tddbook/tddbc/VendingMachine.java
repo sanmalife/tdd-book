@@ -15,12 +15,22 @@ public class VendingMachine {
     /**
      * 扱えるお金の金額リスト
      */
-    private List<Integer> acceptMoneys = Arrays.asList(10, 50, 100, 500, 1000);
+    private static final List<Integer> acceptMoneys = Arrays.asList(10, 50,
+            100, 500, 1000);
 
     /**
      * 投入されたお金のリスト
      */
     private ArrayList<Integer> insertedMoney = new ArrayList<Integer>();
+
+    /**
+     * 格納しているジュース
+     */
+    private Stock stockJuice;
+
+    public VendingMachine() {
+        storeJuice(new Stock(new Juice("コーラ", 120), 5));
+    }
 
     /**
      * お金を投入する
@@ -62,4 +72,39 @@ public class VendingMachine {
         return amount;
     }
 
+    /**
+     * 格納しているジュースの本数を取得する
+     * 
+     * @return 格納しているジュースの本数
+     */
+    public int getStockCount() {
+        return stockJuice.count;
+    }
+
+    /**
+     * 格納しているジュースを返す
+     * 
+     * @return
+     */
+    public Stock getStock() {
+        return stockJuice;
+    }
+
+    /**
+     * ジュースを格納する
+     * 
+     * @param type
+     */
+    public void storeJuice(Stock stock) {
+        stockJuice = stock;
+    }
+
+    /**
+     * 在庫のジュースの種類を取得する
+     * 
+     * @return
+     */
+    public Juice getStockType() {
+        return stockJuice.type;
+    }
 }

@@ -1,9 +1,12 @@
 package jp.p.sanmalife.book.tddbook.tddbc;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -81,5 +84,38 @@ public class VendingMachineTest {
     public void 扱えないお金を投入した場合は投入金額の総計は増加しない() throws Exception {
         vendingMachine.insert(1);
         assertEquals(0, vendingMachine.getTotalAmount());
+    }
+
+    @Test
+    public void 初期状態ではジュースを5本格納している() throws Exception {
+        assertEquals(5, vendingMachine.getStockCount());
+    }
+
+    @Test
+    public void 初期状態ではコーラを格納している() throws Exception {
+        Juice coke = new Juice("コーラ", 120);
+        assertEquals(coke, vendingMachine.getStockType());
+    }
+
+    @Test
+    public void レッドブルを格納するとジュースの種類がレッドブルに変化する() throws Exception {
+        Stock redBullStock = new Stock(new Juice("レッドブル", 200), 1);
+        vendingMachine.storeJuice(redBullStock);
+        assertEquals(new Juice("レッドブル", 200), vendingMachine.getStockType());
+    }
+
+    @Test
+    public void 初期状態で格納されているジュースの情報を取得できる() throws Exception {
+        Stock fiveCoke = new Stock(new Juice("コーラ", 120), 5);
+        assertEquals(fiveCoke, vendingMachine.getStock());
+    }
+
+    @Test
+    public void Mapのequalsメソッドの振る舞いの確認() throws Exception {
+        Map<String, String> map1 = new HashMap<String, String>();
+        map1.put("a", "b");
+        Map<String, String> map2 = new HashMap<String, String>();
+        map2.put("a", "b");
+        assertTrue(map1.equals(map2));
     }
 }
