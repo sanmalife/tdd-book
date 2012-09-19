@@ -138,6 +138,16 @@ public class VendingMachineTest {
     }
 
     @Test
+    public void 在庫が0の場合は投入金額が十分でも購入できない() throws Exception {
+        vendingMachine.insert(1000);
+        for (int i = 0; i < 5; i++) {
+            vendingMachine.purchase();
+        }
+        assertEquals(0, vendingMachine.getStockCount());
+        assertFalse(vendingMachine.canPurchase());
+    }
+
+    @Test
     public void 初期状態でコーラを1本買うと在庫が4本になる() throws Exception {
         vendingMachine.insert(500);
         vendingMachine.purchase();
