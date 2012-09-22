@@ -3,6 +3,7 @@ package jp.p.sanmalife.book.tddbook.tddbc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 自動販売機クラス
@@ -93,6 +94,10 @@ public class VendingMachine {
      */
     public Stock getStock() {
         return stock;
+    }
+
+    public Set<Stock> getStockSet() {
+        return null;
     }
 
     /**

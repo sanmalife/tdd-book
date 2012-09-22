@@ -6,8 +6,10 @@ import static org.junit.Assert.assertThat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -228,5 +230,14 @@ public class VendingMachineTest {
         }
 
         assertThat(change, is(380));
+    }
+
+    @Test
+    public void 初期状態ではレッドブルと水とコーラとが5本ずつある在庫の情報を取得できる() throws Exception {
+        Set<Stock> stocks = new HashSet<Stock>();
+        stocks.add(new Stock(new Juice("レッドブル", 200), 5));
+        stocks.add(new Stock(new Juice("水", 100), 5));
+        stocks.add(new Stock(new Juice("コーラ", 120), 5));
+        assertThat(vendingMachine.getStockSet(), is(stocks));
     }
 }
