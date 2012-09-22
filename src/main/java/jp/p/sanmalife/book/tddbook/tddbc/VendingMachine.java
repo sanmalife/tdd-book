@@ -124,7 +124,7 @@ public class VendingMachine {
     }
 
     /**
-     * コーラを購入する
+     * ジュースを購入する
      */
     public void purchase() {
         if (!canPurchase()) {
@@ -132,6 +132,11 @@ public class VendingMachine {
         }
         stock.count -= 1;
         saleAmount += stock.type.getPrice();
+
+        // 投入金額更新処理
+        int preAmount = getTotalAmount();
+        int postAmount = preAmount - getStockType().getPrice();
+        insertedMoney = getCoins(postAmount);
     }
 
     /**
@@ -141,5 +146,26 @@ public class VendingMachine {
      */
     public int getSaleAmount() {
         return saleAmount;
+    }
+
+    /**
+     * 指定された金額を表現する小銭リストを計算する
+     * 
+     * @param amount
+     *            金額
+     * @return 金額を表現する小銭リスト
+     */
+    private ArrayList<Integer> getCoins(int amount) {
+        ArrayList<Integer> coins = new ArrayList<Integer>();
+
+        int len = acceptMoneys.size();
+        for (int i = len - 1; i >= 0; i--) {
+            int coin = acceptMoneys.get(i);
+            while (amount >= coin) {
+                coins.add(coin);
+                amount -= coin;
+            }
+        }
+        return coins;
     }
 }

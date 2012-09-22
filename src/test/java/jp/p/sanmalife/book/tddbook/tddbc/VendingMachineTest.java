@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -207,5 +208,25 @@ public class VendingMachineTest {
         vendingMachine.insert(10);
         vendingMachine.purchase();
         assertThat(vendingMachine.getTotalAmount(), is(0));
+    }
+
+    @Test
+    public void 投入金額が500円の時に120円のコーラを購入すると投入金額が380円になる() throws Exception {
+        vendingMachine.insert(500);
+        vendingMachine.purchase();
+        assertThat(vendingMachine.getTotalAmount(), is(380));
+    }
+
+    @Test
+    public void 投入金額が500円の時に120円のコーラを購入して払い戻しをすると380円のお釣りが返る() throws Exception {
+        vendingMachine.insert(500);
+        vendingMachine.purchase();
+        List<Integer> coins = vendingMachine.refund();
+        int change = 0;
+        for (Integer coin : coins) {
+            change += coin;
+        }
+
+        assertThat(change, is(380));
     }
 }
