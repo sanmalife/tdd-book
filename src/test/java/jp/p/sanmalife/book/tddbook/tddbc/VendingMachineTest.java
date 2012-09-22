@@ -1,8 +1,7 @@
 package jp.p.sanmalife.book.tddbook.tddbc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,25 +22,25 @@ public class VendingMachineTest {
 
     @Test
     public void 初期状態の時_投入金額の総計は0円() {
-        assertEquals(0, vendingMachine.getTotalAmount());
+        assertThat(vendingMachine.getTotalAmount(), is(0));
     }
 
     @Test
     public void お金を1回投入すると投入金額の総計が増加する() {
         vendingMachine.insert(10);
-        assertEquals(10, vendingMachine.getTotalAmount());
+        assertThat(vendingMachine.getTotalAmount(), is(10));
     }
 
     @Test
     public void お金を2回投入すると投入金額の総計は2回の投入金額の合計になる() {
         vendingMachine.insert(10);
         vendingMachine.insert(50);
-        assertEquals(60, vendingMachine.getTotalAmount());
+        assertThat(vendingMachine.getTotalAmount(), is(60));
     }
 
     @Test
     public void 初期状態で払い戻し操作を行うとつり銭として空リストを返す() throws Exception {
-        assertEquals(Collections.EMPTY_LIST, vendingMachine.refund());
+        assertThat(vendingMachine.refund(), is(Collections.EMPTY_LIST));
     }
 
     @Test
@@ -49,26 +48,26 @@ public class VendingMachineTest {
         vendingMachine.insert(10);
         vendingMachine.refund();
         vendingMachine.refund();
-        assertEquals(Collections.EMPTY_LIST, vendingMachine.refund());
+        assertThat(vendingMachine.refund(), is(Collections.EMPTY_LIST));
     }
 
     @Test
     public void 複数回お金を投入した状態で払い戻し操作を行うと投入したお金のリストを返す() throws Exception {
         vendingMachine.insert(10);
         vendingMachine.insert(50);
-        assertEquals(Arrays.asList(10, 50), vendingMachine.refund());
+        assertThat(vendingMachine.refund(), is(Arrays.asList(10, 50)));
     }
 
     @Test
     public void 払い戻し操作を行うと総計は0円になる() throws Exception {
         vendingMachine.insert(10);
         vendingMachine.refund();
-        assertEquals(0, vendingMachine.getTotalAmount());
+        assertThat(vendingMachine.getTotalAmount(), is(0));
     }
 
     @Test
     public void 想定内のお金が投入された場合はつり銭として0円を返す() throws Exception {
-        assertEquals(0, vendingMachine.insert(10));
+        assertThat(vendingMachine.insert(10), is(0));
     }
 
     @Test
@@ -76,39 +75,39 @@ public class VendingMachineTest {
         int[] notAllowedMoneys = { 1, 5, 2000, 5000, 10000 };
 
         for (int i = 0; i < notAllowedMoneys.length; i++) {
-            assertEquals(notAllowedMoneys[i],
-                    vendingMachine.insert(notAllowedMoneys[i]));
+            assertThat(vendingMachine.insert(notAllowedMoneys[i]),
+                    is(notAllowedMoneys[i]));
         }
     }
 
     @Test
     public void 扱えないお金を投入した場合は投入金額の総計は増加しない() throws Exception {
         vendingMachine.insert(1);
-        assertEquals(0, vendingMachine.getTotalAmount());
+        assertThat(vendingMachine.getTotalAmount(), is(0));
     }
 
     @Test
     public void 初期状態ではジュースを5本格納している() throws Exception {
-        assertEquals(5, vendingMachine.getStockCount());
+        assertThat(vendingMachine.getStockCount(), is(5));
     }
 
     @Test
     public void 初期状態ではコーラを格納している() throws Exception {
         Juice coke = new Juice("コーラ", 120);
-        assertEquals(coke, vendingMachine.getStockType());
+        assertThat(vendingMachine.getStockType(), is(coke));
     }
 
     @Test
     public void レッドブルを格納するとジュースの種類がレッドブルに変化する() throws Exception {
         Stock redBullStock = new Stock(new Juice("レッドブル", 200), 1);
         vendingMachine.storeJuice(redBullStock);
-        assertEquals(new Juice("レッドブル", 200), vendingMachine.getStockType());
+        assertThat(vendingMachine.getStockType(), is(new Juice("レッドブル", 200)));
     }
 
     @Test
     public void 初期状態で格納されているジュースの情報を取得できる() throws Exception {
         Stock fiveCoke = new Stock(new Juice("コーラ", 120), 5);
-        assertEquals(fiveCoke, vendingMachine.getStock());
+        assertThat(vendingMachine.getStock(), is(fiveCoke));
     }
 
     @Test
@@ -117,15 +116,15 @@ public class VendingMachineTest {
         map1.put("a", "b");
         Map<String, String> map2 = new HashMap<String, String>();
         map2.put("a", "b");
-        assertTrue(map1.equals(map2));
+        assertThat(map1.equals(map2), is(true));
     }
 
     @Test
     public void 投入金額が110円の場合は購入できない() throws Exception {
         vendingMachine.insert(100);
         vendingMachine.insert(10);
-        assertEquals(110, vendingMachine.getTotalAmount());
-        assertFalse(vendingMachine.canPurchase());
+        assertThat(vendingMachine.getTotalAmount(), is(110));
+        assertThat(vendingMachine.canPurchase(), is(false));
     }
 
     @Test
@@ -133,13 +132,13 @@ public class VendingMachineTest {
         vendingMachine.insert(100);
         vendingMachine.insert(10);
         vendingMachine.insert(10);
-        assertEquals(120, vendingMachine.getTotalAmount());
-        assertTrue(vendingMachine.canPurchase());
+        assertThat(vendingMachine.getTotalAmount(), is(120));
+        assertThat(vendingMachine.canPurchase(), is(true));
     }
 
     @Test
     public void 初期状態の売上金額は0円() throws Exception {
-        assertEquals(0, vendingMachine.getSaleAmount());
+        assertThat(vendingMachine.getSaleAmount(), is(0));
     }
 
     @Test
@@ -148,22 +147,22 @@ public class VendingMachineTest {
         for (int i = 0; i < 5; i++) {
             vendingMachine.purchase();
         }
-        assertEquals(0, vendingMachine.getStockCount());
-        assertFalse(vendingMachine.canPurchase());
+        assertThat(vendingMachine.getStockCount(), is(0));
+        assertThat(vendingMachine.canPurchase(), is(false));
     }
 
     @Test
     public void 初期状態でコーラを1本買うと在庫が4本になる() throws Exception {
         vendingMachine.insert(500);
         vendingMachine.purchase();
-        assertEquals(4, vendingMachine.getStockCount());
+        assertThat(vendingMachine.getStockCount(), is(4));
     }
 
     @Test
     public void 初期状態でコーラを1本買うと売上金額が120円になる() throws Exception {
         vendingMachine.insert(500);
         vendingMachine.purchase();
-        assertEquals(120, vendingMachine.getSaleAmount());
+        assertThat(vendingMachine.getSaleAmount(), is(120));
     }
 
     @Test
@@ -171,7 +170,7 @@ public class VendingMachineTest {
         vendingMachine.insert(500);
         vendingMachine.purchase();
         vendingMachine.purchase();
-        assertEquals(3, vendingMachine.getStockCount());
+        assertThat(vendingMachine.getStockCount(), is(3));
     }
 
     @Test
@@ -179,25 +178,34 @@ public class VendingMachineTest {
         vendingMachine.insert(500);
         vendingMachine.purchase();
         vendingMachine.purchase();
-        assertEquals(240, vendingMachine.getSaleAmount());
+        assertThat(vendingMachine.getSaleAmount(), is(240));
     }
 
     @Test
     public void 購入できない場合に購入操作を行なっても投入金額が変化しない() throws Exception {
         vendingMachine.insert(10);
         vendingMachine.purchase();
-        assertEquals(10, vendingMachine.getTotalAmount());
+        assertThat(vendingMachine.getTotalAmount(), is(10));
     }
 
     @Test
     public void 購入できない場合に購入操作を行なっても在庫が変化しない() throws Exception {
         vendingMachine.purchase();
-        assertEquals(5, vendingMachine.getStockCount());
+        assertThat(vendingMachine.getStockCount(), is(5));
     }
 
     @Test
     public void 購入できない場合に購入操作を行なっても売上が変化しない() throws Exception {
         vendingMachine.purchase();
-        assertEquals(0, vendingMachine.getSaleAmount());
+        assertThat(vendingMachine.getSaleAmount(), is(0));
+    }
+
+    @Test
+    public void 投入金額が120円の時に120円のコーラを購入すると投入金額が0円になる() throws Exception {
+        vendingMachine.insert(100);
+        vendingMachine.insert(10);
+        vendingMachine.insert(10);
+        vendingMachine.purchase();
+        assertThat(vendingMachine.getTotalAmount(), is(0));
     }
 }
