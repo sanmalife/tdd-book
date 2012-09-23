@@ -163,4 +163,20 @@ public class VendingMachine {
         }
         return coins;
     }
+
+    /**
+     * 現在の投入金額で購入可能なジュースのリストを返す
+     * 
+     * @return 購入可能なジュースのリスト
+     */
+    public List<Juice> getPurchasableList() {
+        List<Juice> purchasables = new ArrayList<Juice>();
+        for (Stock stock : getStockSet()) {
+            if (canPurchase(stock.type)) {
+                purchasables.add(stock.type);
+            }
+        }
+
+        return purchasables;
+    }
 }

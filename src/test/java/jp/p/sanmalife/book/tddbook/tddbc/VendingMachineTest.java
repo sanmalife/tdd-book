@@ -226,4 +226,32 @@ public class VendingMachineTest {
         stocks.add(new Stock(new Juice("コーラ", 120), 5));
         assertThat(vendingMachine.getStockSet(), is(stocks));
     }
+
+    @Test
+    public void 投入金額が90円の時は購入可能なリストとして空のリストを取得できる() throws Exception {
+        vendingMachine.insert(50);
+        vendingMachine.insert(10);
+        vendingMachine.insert(10);
+        vendingMachine.insert(10);
+        vendingMachine.insert(10);
+        assertThat(vendingMachine.getPurchasableList(),
+                is(Collections.EMPTY_LIST));
+    }
+
+    @Test
+    public void 投入金額が100円の時は購入可能なリストとして水だけのリストが取得できる() throws Exception {
+        vendingMachine.insert(100);
+        assertThat(vendingMachine.getPurchasableList(),
+                is(Arrays.asList(water)));
+    }
+
+    @Test
+    public void 投入金額が200円の時は購入可能なリストとしてコーラと水とレッドブルのリストが取得できる() throws Exception {
+        vendingMachine.insert(100);
+        vendingMachine.insert(100);
+
+        // リストに含まれる要素レベルで等しければ良い
+        assertThat(new HashSet<Juice>(vendingMachine.getPurchasableList()),
+                is(new HashSet<Juice>(Arrays.asList(coke, redBull, water))));
+    }
 }
