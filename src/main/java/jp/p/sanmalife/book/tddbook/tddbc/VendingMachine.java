@@ -2,6 +2,8 @@ package jp.p.sanmalife.book.tddbook.tddbc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,16 +27,15 @@ public class VendingMachine {
     private ArrayList<Integer> insertedMoney = new ArrayList<Integer>();
 
     /**
-     * 格納しているジュース
-     */
-    private Stock stock;
-
-    /**
      * 売上金額
      */
     private int saleAmount;
 
+    private HashMap<Juice, Stock> stocks = new HashMap<Juice, Stock>();
+
     public VendingMachine() {
+        storeJuice(new Stock(new Juice("レッドブル", 200), 5));
+        storeJuice(new Stock(new Juice("水", 100), 5));
         storeJuice(new Stock(new Juice("コーラ", 120), 5));
     }
 
@@ -79,25 +80,16 @@ public class VendingMachine {
     }
 
     /**
-     * 格納しているジュースの本数を取得する
-     * 
-     * @return 格納しているジュースの本数
-     */
-    public int getStockCount() {
-        return stock.count;
-    }
-
-    /**
      * 格納しているジュースを返す
      * 
      * @return
      */
-    public Stock getStock() {
-        return stock;
+    public Stock getStock(Juice juice) {
+        return stocks.get(juice);
     }
 
     public Set<Stock> getStockSet() {
-        return null;
+        return new HashSet<Stock>(stocks.values());
     }
 
     /**
@@ -106,41 +98,39 @@ public class VendingMachine {
      * @param type
      */
     public void storeJuice(Stock stock) {
-        this.stock = stock;
-    }
-
-    /**
-     * 在庫のジュースの種類を取得する
-     * 
-     * @return
-     */
-    public Juice getStockType() {
-        return stock.type;
+        stocks.put(stock.type, stock);
     }
 
     /**
      * ジュースを購入できるか判定する。在庫が1以上かつ、投入金額総計が値段以上の場合購入可能。
      * 
+     * @param juice
+     *            判定対象ジュース
+     * 
      * @return ジュースが購入できる場合true
      */
-    public boolean canPurchase() {
-        return (getTotalAmount() >= stock.type.getPrice()) && (stock.count > 0) ? true
-                : false;
+    public boolean canPurchase(Juice juice) {
+        return (getTotalAmount() >= juice.getPrice())
+                && (getStock(juice).count > 0) ? true : false;
     }
 
     /**
      * ジュースを購入する
+     * 
+     * @param juice
      */
-    public void purchase() {
-        if (!canPurchase()) {
+    public void purchase(Juice juice) {
+        if (!canPurchase(juice)) {
             return;
         }
+
+        Stock stock = getStock(juice);
         stock.count -= 1;
-        saleAmount += stock.type.getPrice();
+        saleAmount += juice.getPrice();
 
         // 投入金額更新処理
         int preAmount = getTotalAmount();
-        int postAmount = preAmount - getStockType().getPrice();
+        int postAmount = preAmount - juice.getPrice();
         insertedMoney = getCoins(postAmount);
     }
 

@@ -52,4 +52,13 @@ public class Juice {
         return name.equals(juice.name) && price == juice.price;
     }
 
+    @Override
+    public String toString() {
+        return "name: " + name + ", price: " + price;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

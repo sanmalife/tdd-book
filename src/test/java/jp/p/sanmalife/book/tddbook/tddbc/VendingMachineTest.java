@@ -17,10 +17,16 @@ import org.junit.Test;
 public class VendingMachineTest {
 
     private VendingMachine vendingMachine;
+    private Juice coke;
+    private Juice redBull;
+    private Juice water;
 
     @Before
     public void before() {
         vendingMachine = new VendingMachine();
+        coke = new Juice("コーラ", 120);
+        redBull = new Juice("レッドブル", 200);
+        water = new Juice("水", 100);
     }
 
     @Test
@@ -90,30 +96,6 @@ public class VendingMachineTest {
     }
 
     @Test
-    public void 初期状態ではジュースを5本格納している() throws Exception {
-        assertThat(vendingMachine.getStockCount(), is(5));
-    }
-
-    @Test
-    public void 初期状態ではコーラを格納している() throws Exception {
-        Juice coke = new Juice("コーラ", 120);
-        assertThat(vendingMachine.getStockType(), is(coke));
-    }
-
-    @Test
-    public void レッドブルを格納するとジュースの種類がレッドブルに変化する() throws Exception {
-        Stock redBullStock = new Stock(new Juice("レッドブル", 200), 1);
-        vendingMachine.storeJuice(redBullStock);
-        assertThat(vendingMachine.getStockType(), is(new Juice("レッドブル", 200)));
-    }
-
-    @Test
-    public void 初期状態で格納されているジュースの情報を取得できる() throws Exception {
-        Stock fiveCoke = new Stock(new Juice("コーラ", 120), 5);
-        assertThat(vendingMachine.getStock(), is(fiveCoke));
-    }
-
-    @Test
     public void Mapのequalsメソッドの振る舞いの確認() throws Exception {
         Map<String, String> map1 = new HashMap<String, String>();
         map1.put("a", "b");
@@ -123,20 +105,20 @@ public class VendingMachineTest {
     }
 
     @Test
-    public void 投入金額が110円の場合は購入できない() throws Exception {
+    public void 投入金額が110円の場合はコーラを購入できない() throws Exception {
         vendingMachine.insert(100);
         vendingMachine.insert(10);
         assertThat(vendingMachine.getTotalAmount(), is(110));
-        assertThat(vendingMachine.canPurchase(), is(false));
+        assertThat(vendingMachine.canPurchase(coke), is(false));
     }
 
     @Test
-    public void 投入金額が120円の場合は購入できる() throws Exception {
+    public void 投入金額が120円の場合はコーラを購入できる() throws Exception {
         vendingMachine.insert(100);
         vendingMachine.insert(10);
         vendingMachine.insert(10);
         assertThat(vendingMachine.getTotalAmount(), is(120));
-        assertThat(vendingMachine.canPurchase(), is(true));
+        assertThat(vendingMachine.canPurchase(coke), is(true));
     }
 
     @Test
@@ -145,61 +127,65 @@ public class VendingMachineTest {
     }
 
     @Test
-    public void 在庫が0の場合は投入金額が十分でも購入できない() throws Exception {
+    public void 在庫が0の場合は投入金額が十分でもコーラを購入できない() throws Exception {
         vendingMachine.insert(1000);
         for (int i = 0; i < 5; i++) {
-            vendingMachine.purchase();
+            vendingMachine.purchase(coke);
         }
-        assertThat(vendingMachine.getStockCount(), is(0));
-        assertThat(vendingMachine.canPurchase(), is(false));
+        Stock cokeStock = vendingMachine.getStock(coke);
+        assertThat(cokeStock.count, is(0));
+        assertThat(vendingMachine.canPurchase(coke), is(false));
     }
 
     @Test
     public void 初期状態でコーラを1本買うと在庫が4本になる() throws Exception {
         vendingMachine.insert(500);
-        vendingMachine.purchase();
-        assertThat(vendingMachine.getStockCount(), is(4));
+        vendingMachine.purchase(coke);
+        Stock cokeStock = vendingMachine.getStock(coke);
+        assertThat(cokeStock.count, is(4));
     }
 
     @Test
     public void 初期状態でコーラを1本買うと売上金額が120円になる() throws Exception {
         vendingMachine.insert(500);
-        vendingMachine.purchase();
+        vendingMachine.purchase(coke);
         assertThat(vendingMachine.getSaleAmount(), is(120));
     }
 
     @Test
     public void 初期状態でコーラを2本買うと在庫が3本になる() throws Exception {
         vendingMachine.insert(500);
-        vendingMachine.purchase();
-        vendingMachine.purchase();
-        assertThat(vendingMachine.getStockCount(), is(3));
+        vendingMachine.purchase(coke);
+        vendingMachine.purchase(coke);
+        Stock cokeStock = vendingMachine.getStock(coke);
+        assertThat(cokeStock.count, is(3));
     }
 
     @Test
     public void 初期状態でコーラを2本買うと売上金額が240円になる() throws Exception {
         vendingMachine.insert(500);
-        vendingMachine.purchase();
-        vendingMachine.purchase();
+        vendingMachine.purchase(coke);
+        vendingMachine.purchase(coke);
         assertThat(vendingMachine.getSaleAmount(), is(240));
     }
 
     @Test
     public void 購入できない場合に購入操作を行なっても投入金額が変化しない() throws Exception {
         vendingMachine.insert(10);
-        vendingMachine.purchase();
+        vendingMachine.purchase(coke);
         assertThat(vendingMachine.getTotalAmount(), is(10));
     }
 
     @Test
     public void 購入できない場合に購入操作を行なっても在庫が変化しない() throws Exception {
-        vendingMachine.purchase();
-        assertThat(vendingMachine.getStockCount(), is(5));
+        vendingMachine.purchase(coke);
+        Stock cokeStock = vendingMachine.getStock(coke);
+        assertThat(cokeStock.count, is(5));
     }
 
     @Test
     public void 購入できない場合に購入操作を行なっても売上が変化しない() throws Exception {
-        vendingMachine.purchase();
+        vendingMachine.purchase(coke);
         assertThat(vendingMachine.getSaleAmount(), is(0));
     }
 
@@ -208,21 +194,21 @@ public class VendingMachineTest {
         vendingMachine.insert(100);
         vendingMachine.insert(10);
         vendingMachine.insert(10);
-        vendingMachine.purchase();
+        vendingMachine.purchase(coke);
         assertThat(vendingMachine.getTotalAmount(), is(0));
     }
 
     @Test
     public void 投入金額が500円の時に120円のコーラを購入すると投入金額が380円になる() throws Exception {
         vendingMachine.insert(500);
-        vendingMachine.purchase();
+        vendingMachine.purchase(coke);
         assertThat(vendingMachine.getTotalAmount(), is(380));
     }
 
     @Test
     public void 投入金額が500円の時に120円のコーラを購入して払い戻しをすると380円のお釣りが返る() throws Exception {
         vendingMachine.insert(500);
-        vendingMachine.purchase();
+        vendingMachine.purchase(coke);
         List<Integer> coins = vendingMachine.refund();
         int change = 0;
         for (Integer coin : coins) {
