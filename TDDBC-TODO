@@ -66,8 +66,10 @@
 　■90円の時は空のリスト
 　■100円の時は水だけのリスト
 　■200円の時は水とコーラとレッドブルのリスト
-□JuiceとStockのhashCode
+□APIの見直し
+□Stock周りのDomainオブジェクトの整理・見直し
 
 [いつかやる]
+□JuiceとStockのhashCode
 □Enclosed.classを使って状況を説明するテストを作成する
 ■assertThat化

@@ -34,9 +34,9 @@ public class VendingMachine {
     private HashMap<Juice, Stock> stocks = new HashMap<Juice, Stock>();
 
     public VendingMachine() {
-        storeJuice(new Stock(new Juice("レッドブル", 200), 5));
-        storeJuice(new Stock(new Juice("水", 100), 5));
-        storeJuice(new Stock(new Juice("コーラ", 120), 5));
+        store(new Stock(new Juice("レッドブル", 200), 5));
+        store(new Stock(new Juice("水", 100), 5));
+        store(new Stock(new Juice("コーラ", 120), 5));
     }
 
     /**
@@ -97,7 +97,7 @@ public class VendingMachine {
      * 
      * @param type
      */
-    public void storeJuice(Stock stock) {
+    public void store(Stock stock) {
         stocks.put(stock.type, stock);
     }
 
@@ -144,6 +144,22 @@ public class VendingMachine {
     }
 
     /**
+     * 現在の投入金額で購入可能なジュースのリストを返す
+     * 
+     * @return 購入可能なジュースのリスト
+     */
+    public List<Juice> getPurchasableList() {
+        List<Juice> purchasables = new ArrayList<Juice>();
+        for (Stock stock : getStockSet()) {
+            if (canPurchase(stock.type)) {
+                purchasables.add(stock.type);
+            }
+        }
+    
+        return purchasables;
+    }
+
+    /**
      * 指定された金額を表現する小銭リストを計算する
      * 
      * @param amount
@@ -162,21 +178,5 @@ public class VendingMachine {
             }
         }
         return coins;
-    }
-
-    /**
-     * 現在の投入金額で購入可能なジュースのリストを返す
-     * 
-     * @return 購入可能なジュースのリスト
-     */
-    public List<Juice> getPurchasableList() {
-        List<Juice> purchasables = new ArrayList<Juice>();
-        for (Stock stock : getStockSet()) {
-            if (canPurchase(stock.type)) {
-                purchasables.add(stock.type);
-            }
-        }
-
-        return purchasables;
     }
 }
