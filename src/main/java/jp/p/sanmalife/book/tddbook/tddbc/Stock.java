@@ -22,4 +22,14 @@ public class Stock {
         Stock stock = (Stock) obj;
         return type.equals(stock.type) && count == stock.count;
     }
+
+    @Override
+    public String toString() {
+        return "{Juice: {" + type.toString() + "}, Count: " + count + "}";
+    }
+
+    @Override
+    public int hashCode() {
+        return type.hashCode() + 31 * count;
+    }
 }
