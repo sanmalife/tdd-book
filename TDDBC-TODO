@@ -70,6 +70,6 @@
 □Stock周りのDomainオブジェクトの整理・見直し
 
 [いつかやる]
-□JuiceとStockのhashCode
+■JuiceとStockのhashCode
 □Enclosed.classを使って状況を説明するテストを作成する
 ■assertThat化

@@ -30,6 +30,6 @@ public class Stock {
 
     @Override
     public int hashCode() {
-        return 0;
+        return type.hashCode() + 31 * count;
     }
 }
