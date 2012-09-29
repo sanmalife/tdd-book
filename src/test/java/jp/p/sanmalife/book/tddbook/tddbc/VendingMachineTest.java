@@ -12,26 +12,91 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
+@RunWith(Enclosed.class)
 public class VendingMachineTest {
+    private static VendingMachine vendingMachine;
+    private static Juice coke;
+    private static Juice redBull;
+    private static Juice water;
 
-    private VendingMachine vendingMachine;
-    private Juice coke;
-    private Juice redBull;
-    private Juice water;
-
-    @Before
-    public void before() {
-        vendingMachine = new VendingMachine();
+    /**
+     * 初期状態としてクラスの初期化と
+     */
+    @BeforeClass
+    public static void デフォルトジュースの生成() {
         coke = new Juice("コーラ", 120);
         redBull = new Juice("レッドブル", 200);
         water = new Juice("水", 100);
     }
 
-    @Test
-    public void 初期状態の時_投入金額の総計は0円() {
-        assertThat(vendingMachine.getTotalAmount(), is(0));
+    public static class 初期状態のテスト {
+        @Before
+        public void 初期化() {
+            vendingMachine = new VendingMachine();
+        }
+
+        @Test
+        public void 初期状態の時_投入金額の総計は0円() {
+            assertThat(vendingMachine.getTotalAmount(), is(0));
+        }
+
+        @Test
+        public void 初期状態の売上金額は0円() throws Exception {
+            assertThat(vendingMachine.getSaleAmount(), is(0));
+        }
+
+        @Test
+        public void 初期状態ではレッドブルと水とコーラとが5本ずつある在庫の情報を取得できる() throws Exception {
+            Set<Stock> stocks = new HashSet<Stock>();
+            stocks.add(new Stock(new Juice("レッドブル", 200), 5));
+            stocks.add(new Stock(new Juice("水", 100), 5));
+            stocks.add(new Stock(new Juice("コーラ", 120), 5));
+            assertThat(vendingMachine.getStockSet(), is(stocks));
+        }
+
+        @Test
+        public void 初期状態で払い戻し操作を行うとつり銭として空リストを返す() throws Exception {
+            assertThat(vendingMachine.refund(), is(Collections.EMPTY_LIST));
+        }
+
+        @Test
+        public void 初期状態で100円の水を1本買うと在庫が4本になる() throws Exception {
+            vendingMachine.insert(100);
+            vendingMachine.purchase(water);
+            Stock waterStock = vendingMachine.getStock(water);
+            assertThat(waterStock.count, is(4));
+        }
+
+        @Test
+        public void 初期状態で100円の水を2本買うと在庫が3本になる() throws Exception {
+            vendingMachine.insert(100);
+            vendingMachine.purchase(water);
+            vendingMachine.insert(100);
+            vendingMachine.purchase(water);
+            Stock waterStock = vendingMachine.getStock(water);
+            assertThat(waterStock.count, is(3));
+        }
+
+        @Test
+        public void 初期状態で100円の水を1本買うと売上金額が100円になる() throws Exception {
+            vendingMachine.insert(100);
+            vendingMachine.purchase(water);
+            assertThat(vendingMachine.getSaleAmount(), is(100));
+        }
+
+        @Test
+        public void 初期状態で100円の水を2本買うと売上金額が200円になる() throws Exception {
+            vendingMachine.insert(100);
+            vendingMachine.purchase(water);
+            vendingMachine.insert(100);
+            vendingMachine.purchase(water);
+            assertThat(vendingMachine.getSaleAmount(), is(200));
+        }
     }
 
     @Test
@@ -45,11 +110,6 @@ public class VendingMachineTest {
         vendingMachine.insert(10);
         vendingMachine.insert(50);
         assertThat(vendingMachine.getTotalAmount(), is(60));
-    }
-
-    @Test
-    public void 初期状態で払い戻し操作を行うとつり銭として空リストを返す() throws Exception {
-        assertThat(vendingMachine.refund(), is(Collections.EMPTY_LIST));
     }
 
     @Test
@@ -122,11 +182,6 @@ public class VendingMachineTest {
     }
 
     @Test
-    public void 初期状態の売上金額は0円() throws Exception {
-        assertThat(vendingMachine.getSaleAmount(), is(0));
-    }
-
-    @Test
     public void 在庫が0の場合は投入金額が十分でも水を購入できない() throws Exception {
         for (int i = 0; i < 5; i++) {
             vendingMachine.insert(100);
@@ -135,40 +190,6 @@ public class VendingMachineTest {
         Stock cokeStock = vendingMachine.getStock(water);
         assertThat(cokeStock.count, is(0));
         assertThat(vendingMachine.canPurchase(water), is(false));
-    }
-
-    @Test
-    public void 初期状態でコーラを1本買うと在庫が4本になる() throws Exception {
-        vendingMachine.insert(500);
-        vendingMachine.purchase(coke);
-        Stock cokeStock = vendingMachine.getStock(coke);
-        assertThat(cokeStock.count, is(4));
-    }
-
-    @Test
-    public void 初期状態でコーラを1本買うと売上金額が120円になる() throws Exception {
-        vendingMachine.insert(500);
-        vendingMachine.purchase(coke);
-        assertThat(vendingMachine.getSaleAmount(), is(120));
-    }
-
-    @Test
-    public void 初期状態でコーラを2本買うと在庫が3本になる() throws Exception {
-        vendingMachine.insert(500);
-        vendingMachine.purchase(coke);
-        vendingMachine.insert(500);
-        vendingMachine.purchase(coke);
-        Stock cokeStock = vendingMachine.getStock(coke);
-        assertThat(cokeStock.count, is(3));
-    }
-
-    @Test
-    public void 初期状態でコーラを2本買うと売上金額が240円になる() throws Exception {
-        vendingMachine.insert(500);
-        vendingMachine.purchase(coke);
-        vendingMachine.insert(500);
-        vendingMachine.purchase(coke);
-        assertThat(vendingMachine.getSaleAmount(), is(240));
     }
 
     @Test
@@ -198,15 +219,6 @@ public class VendingMachineTest {
         vendingMachine.insert(10);
         vendingMachine.purchase(coke);
         assertThat(vendingMachine.getTotalAmount(), is(0));
-    }
-
-    @Test
-    public void 初期状態ではレッドブルと水とコーラとが5本ずつある在庫の情報を取得できる() throws Exception {
-        Set<Stock> stocks = new HashSet<Stock>();
-        stocks.add(new Stock(new Juice("レッドブル", 200), 5));
-        stocks.add(new Stock(new Juice("水", 100), 5));
-        stocks.add(new Stock(new Juice("コーラ", 120), 5));
-        assertThat(vendingMachine.getStockSet(), is(stocks));
     }
 
     @Test
