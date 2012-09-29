@@ -127,14 +127,14 @@ public class VendingMachineTest {
     }
 
     @Test
-    public void 在庫が0の場合は投入金額が十分でもコーラを購入できない() throws Exception {
-        vendingMachine.insert(1000);
+    public void 在庫が0の場合は投入金額が十分でも水を購入できない() throws Exception {
         for (int i = 0; i < 5; i++) {
-            vendingMachine.purchase(coke);
+            vendingMachine.insert(100);
+            vendingMachine.purchase(water);
         }
-        Stock cokeStock = vendingMachine.getStock(coke);
+        Stock cokeStock = vendingMachine.getStock(water);
         assertThat(cokeStock.count, is(0));
-        assertThat(vendingMachine.canPurchase(coke), is(false));
+        assertThat(vendingMachine.canPurchase(water), is(false));
     }
 
     @Test
@@ -156,6 +156,7 @@ public class VendingMachineTest {
     public void 初期状態でコーラを2本買うと在庫が3本になる() throws Exception {
         vendingMachine.insert(500);
         vendingMachine.purchase(coke);
+        vendingMachine.insert(500);
         vendingMachine.purchase(coke);
         Stock cokeStock = vendingMachine.getStock(coke);
         assertThat(cokeStock.count, is(3));
@@ -165,6 +166,7 @@ public class VendingMachineTest {
     public void 初期状態でコーラを2本買うと売上金額が240円になる() throws Exception {
         vendingMachine.insert(500);
         vendingMachine.purchase(coke);
+        vendingMachine.insert(500);
         vendingMachine.purchase(coke);
         assertThat(vendingMachine.getSaleAmount(), is(240));
     }
@@ -196,26 +198,6 @@ public class VendingMachineTest {
         vendingMachine.insert(10);
         vendingMachine.purchase(coke);
         assertThat(vendingMachine.getTotalAmount(), is(0));
-    }
-
-    @Test
-    public void 投入金額が500円の時に120円のコーラを購入すると投入金額が380円になる() throws Exception {
-        vendingMachine.insert(500);
-        vendingMachine.purchase(coke);
-        assertThat(vendingMachine.getTotalAmount(), is(380));
-    }
-
-    @Test
-    public void 投入金額が500円の時に120円のコーラを購入して払い戻しをすると380円のお釣りが返る() throws Exception {
-        vendingMachine.insert(500);
-        vendingMachine.purchase(coke);
-        List<Integer> coins = vendingMachine.refund();
-        int change = 0;
-        for (Integer coin : coins) {
-            change += coin;
-        }
-
-        assertThat(change, is(380));
     }
 
     @Test
@@ -253,5 +235,29 @@ public class VendingMachineTest {
         // リストに含まれる要素レベルで等しければ良い
         assertThat(new HashSet<Juice>(vendingMachine.getPurchasableList()),
                 is(new HashSet<Juice>(Arrays.asList(coke, redBull, water))));
+    }
+
+    @Test
+    public void 投入金額が不足している場合にジュースを買うと釣り銭として空リストを取得する() throws Exception {
+        assertThat(vendingMachine.purchase(coke), is(Collections.EMPTY_LIST));
+    }
+
+    @Test
+    public void 投入金額と同じ値段のジュースを買うと釣り銭として空リストを取得する() throws Exception {
+        vendingMachine.insert(100);
+        List<Integer> refund = vendingMachine.purchase(water);
+        assertThat(refund, is(Collections.EMPTY_LIST));
+    }
+
+    @Test
+    public void 投入金額より安い値段のジュースを買うと差額を釣り銭リストとして取得する() throws Exception {
+        vendingMachine.insert(500);
+        List<Integer> refund = vendingMachine.purchase(redBull);
+        int amount = 0;
+        for (Integer coin : refund) {
+            amount += coin;
+        }
+
+        assertThat(amount, is(300));
     }
 }

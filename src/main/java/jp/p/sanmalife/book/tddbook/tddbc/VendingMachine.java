@@ -2,6 +2,7 @@ package jp.p.sanmalife.book.tddbook.tddbc;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -118,20 +119,23 @@ public class VendingMachine {
      * ジュースを購入する
      * 
      * @param juice
+     *            購入するジュース
+     * @return 釣り銭リスト
      */
-    public void purchase(Juice juice) {
+    public List<Integer> purchase(Juice juice) {
         if (!canPurchase(juice)) {
-            return;
+            return Collections.emptyList();
         }
 
         Stock stock = getStock(juice);
         stock.count -= 1;
+
         saleAmount += juice.getPrice();
 
-        // 投入金額更新処理
         int preAmount = getTotalAmount();
         int postAmount = preAmount - juice.getPrice();
         insertedMoney = getCoins(postAmount);
+        return refund();
     }
 
     /**
@@ -155,7 +159,7 @@ public class VendingMachine {
                 purchasables.add(stock.type);
             }
         }
-    
+
         return purchasables;
     }
 
