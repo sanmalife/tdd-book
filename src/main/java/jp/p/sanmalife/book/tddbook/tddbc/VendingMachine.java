@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -182,5 +183,19 @@ public class VendingMachine {
             }
         }
         return coins;
+    }
+
+    /**
+     * 釣り銭ストックを取得する
+     * 
+     * @return 釣り銭ストック
+     */
+    public Map<Integer, Integer> getChangeStock() {
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        for (Integer money : acceptMoneys) {
+            map.put(money, 10);
+        }
+
+        return map;
     }
 }

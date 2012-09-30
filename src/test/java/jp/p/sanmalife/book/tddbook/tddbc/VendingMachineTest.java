@@ -133,6 +133,15 @@ public class VendingMachineTest {
             vendingMachine.refund();
             assertThat(vendingMachine.getTotalAmount(), is(0));
         }
+
+        @Test
+        public void 初期状態では釣り銭ストックとして有効なお金を10枚ずつ保持する() throws Exception {
+            Map<Integer, Integer> initialChangeStock = vendingMachine
+                    .getChangeStock();
+            for (Integer money : VendingMachine.acceptMoneys) {
+                assertThat(initialChangeStock.get(money), is(10));
+            }
+        }
     }
 
     public static class ジュースを購入できない場合 {
