@@ -77,7 +77,7 @@
 [いつかやる]
 ■JuiceとStockのhashCode
 ■assertThat化
-□Enclosed.classを使って状況を説明するテストを作成する
+■Enclosed.classを使って状況を説明するテストを作成する
 □APIの見直し
 □Stock周りのDomainオブジェクトの整理・見直し
 

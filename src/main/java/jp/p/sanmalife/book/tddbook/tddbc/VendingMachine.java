@@ -19,7 +19,7 @@ public class VendingMachine {
     /**
      * 扱えるお金の金額リスト
      */
-    private static final List<Integer> acceptMoneys = Arrays.asList(10, 50,
+    protected static final List<Integer> acceptMoneys = Arrays.asList(10, 50,
             100, 500, 1000);
 
     /**
