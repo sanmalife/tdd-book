@@ -35,10 +35,17 @@ public class VendingMachine {
 
     private HashMap<Juice, Stock> stocks = new HashMap<Juice, Stock>();
 
+    private HashMap<Integer, Integer> changeStock = new HashMap<Integer, Integer>();
+
     public VendingMachine() {
         store(new Stock(new Juice("レッドブル", 200), 5));
         store(new Stock(new Juice("水", 100), 5));
         store(new Stock(new Juice("コーラ", 120), 5));
+
+        // 初期状態では各10枚保持する
+        for (Integer money : acceptMoneys) {
+            setChangeStock(money, 10);
+        }
     }
 
     /**
@@ -64,7 +71,7 @@ public class VendingMachine {
      */
     public List<Integer> refund() {
         ArrayList<Integer> changeList = insertedMoney;
-        insertedMoney = new ArrayList<Integer>();
+        clear();
         return changeList;
     }
 
@@ -128,15 +135,27 @@ public class VendingMachine {
             return Collections.emptyList();
         }
 
+        // 在庫
         Stock stock = getStock(juice);
         stock.count -= 1;
 
+        // 売上
         saleAmount += juice.getPrice();
 
-        int preAmount = getTotalAmount();
-        int postAmount = preAmount - juice.getPrice();
-        insertedMoney = getCoins(postAmount);
-        return refund();
+        // 釣り銭
+        int change = getTotalAmount() - juice.getPrice();
+        List<Integer> changeCoins = getChangeCoins(change);
+
+        clear();
+
+        return changeCoins;
+    }
+
+    /**
+     * 初期状態にする
+     */
+    private void clear() {
+        insertedMoney = new ArrayList<Integer>();
     }
 
     /**
@@ -165,24 +184,34 @@ public class VendingMachine {
     }
 
     /**
-     * 指定された金額を表現する小銭リストを計算する
+     * 指定された金額を表現する釣り銭リストを取得する。釣り銭には投入されたお金を優先して利用する。
      * 
-     * @param amount
-     *            金額
+     * @param change
+     *            釣り銭の金額
      * @return 金額を表現する小銭リスト
      */
-    private ArrayList<Integer> getCoins(int amount) {
-        ArrayList<Integer> coins = new ArrayList<Integer>();
+    private ArrayList<Integer> getChangeCoins(int change) {
+        ArrayList<Integer> changeCoins = new ArrayList<Integer>();
 
+        // 額面の大きなお金から優先して利用する
         int len = acceptMoneys.size();
         for (int i = len - 1; i >= 0; i--) {
             int coin = acceptMoneys.get(i);
-            while (amount >= coin) {
-                coins.add(coin);
-                amount -= coin;
+            while (change >= coin) {
+                if (insertedMoney.contains(Integer.valueOf(coin))) {
+                    insertedMoney.remove(Integer.valueOf(coin));
+                    changeCoins.add(coin);
+                    change -= coin;
+                } else if (changeStock.get(coin) > 0) {
+                    changeStock.put(coin, changeStock.get(coin) - 1);
+                    changeCoins.add(coin);
+                    change -= coin;
+                } else {
+                    break;
+                }
             }
         }
-        return coins;
+        return changeCoins;
     }
 
     /**
@@ -191,11 +220,18 @@ public class VendingMachine {
      * @return 釣り銭ストック
      */
     public Map<Integer, Integer> getChangeStock() {
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-        for (Integer money : acceptMoneys) {
-            map.put(money, 10);
-        }
+        return changeStock;
+    }
 
-        return map;
+    /**
+     * 釣り銭ストックを設定する
+     * 
+     * @param money
+     *            金額
+     * @param count
+     *            枚数
+     */
+    private void setChangeStock(Integer money, Integer count) {
+        changeStock.put(money, count);
     }
 }
