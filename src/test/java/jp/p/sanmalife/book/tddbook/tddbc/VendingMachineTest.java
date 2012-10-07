@@ -128,7 +128,7 @@ public class VendingMachineTest {
         }
 
         @Test
-        public void 初期状態で10円を投入したと似払い戻し操作を行うと総計は0円になる() throws Exception {
+        public void 初期状態で10円を投入した後に払い戻し操作を行うと総計は0円になる() throws Exception {
             vendingMachine.insert(10);
             vendingMachine.refund();
             assertThat(vendingMachine.getTotalAmount(), is(0));
@@ -161,6 +161,19 @@ public class VendingMachineTest {
 
             Map<Integer, Integer> changeStock = vendingMachine.getChangeStock();
             assertThat(changeStock.get(10), is(10));
+        }
+
+        @Test
+        public void 初期状態で210円投入して120円のコーラを購入するときに減る釣り銭ストックは10円3枚と50円1枚()
+                throws Exception {
+            vendingMachine.insert(100);
+            vendingMachine.insert(100);
+            vendingMachine.insert(10);
+            vendingMachine.purchase(coke);
+            Map<Integer, Integer> changeStock = vendingMachine.getChangeStock();
+
+            assertThat(changeStock.get(50), is(9));
+            assertThat(changeStock.get(10), is(7));
         }
 
         @Test
@@ -291,6 +304,45 @@ public class VendingMachineTest {
 
             assertThat(changeAmount, is(30));
         }
+    }
+
+    public static class 釣り銭が不足している場合 {
+
+        int initialSaleAmount; // 初期状態の売上金額
+
+        @Before
+        public void 初期化として100円の釣り銭をなくす() {
+            vendingMachine = new VendingMachine();
+
+            // 380円のつり銭を2回と400円の釣り銭を1回
+            for (int i = 0; i < 2; i++) {
+                vendingMachine.insert(500);
+                vendingMachine.purchase(coke);
+            }
+            // 100円4枚のつり銭1回と、50円8枚の釣り銭1回
+            for (int i = 0; i < 2; i++) {
+                vendingMachine.insert(500);
+                vendingMachine.purchase(water);
+            }
+
+            initialSaleAmount = vendingMachine.getSaleAmount();
+
+            Map<Integer, Integer> changeStock = vendingMachine.getChangeStock();
+            assertThat(changeStock.get(100), is(0));
+            assertThat(changeStock.get(50), is(0));
+            assertThat(changeStock.get(10), is(4)); // 10円は残り40円分
+        }
+
+        @Test
+        public void 釣り銭が不足しているときに購入しようとしても購入できない() throws Exception {
+            vendingMachine.insert(500);
+            assertThat(vendingMachine.canPurchase(water), is(false));
+        }
+
+        // 売上が変わらない
+        // 投入金額が変わらない
+        // 在庫が変わらない
+        // 釣り銭が変わらない
     }
 
     public static class 常に成立する条件 {

@@ -111,7 +111,7 @@ public class VendingMachine {
     }
 
     /**
-     * ジュースを購入できるか判定する。在庫が1以上かつ、投入金額総計が値段以上の場合購入可能。
+     * ジュースを購入できるか判定する。在庫が1以上かつ、投入金額総計が値段以上で、お釣りが支払える場合購入可能。
      * 
      * @param juice
      *            判定対象ジュース
@@ -119,6 +119,31 @@ public class VendingMachine {
      * @return ジュースが購入できる場合true
      */
     public boolean canPurchase(Juice juice) {
+        // お釣りに関して
+        Map<Integer, Integer> coins = new HashMap<Integer, Integer>();
+        for (Integer coin : changeStock.keySet()) {
+            coins.put(coin, changeStock.get(coin));
+        }
+        for (Integer coin : insertedMoney) {
+            coins.put(coin, coins.get(coin) + 1);
+        }
+        int len = acceptMoneys.size();
+        int change = getTotalAmount() - juice.getPrice();
+        for (int i = len - 1; i >= 0; i--) {
+            Integer coin = acceptMoneys.get(i);
+            while (change >= coin) {
+                if (coins.get(coin) == 0) {
+                    break;
+                }
+                change -= coin;
+                coins.put(coin, coins.get(coin) - 1);
+            }
+        }
+        if (change != 0) {
+            return false;
+        }
+
+        // 在庫と投入金額に関して
         return (getTotalAmount() >= juice.getPrice())
                 && (getStock(juice).count > 0) ? true : false;
     }
@@ -202,7 +227,7 @@ public class VendingMachine {
                     insertedMoney.remove(Integer.valueOf(coin));
                     changeCoins.add(coin);
                     change -= coin;
-                } else if (changeStock.get(coin) > 0) {
+                } else if (changeStock.get(coin) != 0) {
                     changeStock.put(coin, changeStock.get(coin) - 1);
                     changeCoins.add(coin);
                     change -= coin;
