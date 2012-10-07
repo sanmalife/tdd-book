@@ -339,10 +339,40 @@ public class VendingMachineTest {
             assertThat(vendingMachine.canPurchase(water), is(false));
         }
 
-        // 売上が変わらない
-        // 投入金額が変わらない
-        // 在庫が変わらない
-        // 釣り銭が変わらない
+        @Test
+        public void 釣り銭が不足しているときに購入しようとしても売上が変わらない() throws Exception {
+            vendingMachine.insert(500);
+            vendingMachine.purchase(water);
+            assertThat(vendingMachine.getSaleAmount(), is(initialSaleAmount));
+        }
+
+        @Test
+        public void 釣り銭が不足しているときに購入しようとしても投入金額は変わらない() throws Exception {
+            vendingMachine.insert(500);
+            vendingMachine.purchase(water);
+            assertThat(vendingMachine.getTotalAmount(), is(500));
+        }
+
+        @Test
+        public void 釣り銭が不足しているときに購入しようとしても在庫は変わらない() throws Exception {
+            int stockSize = vendingMachine.getStock(water).count;
+            vendingMachine.insert(500);
+            vendingMachine.purchase(water);
+            assertThat(vendingMachine.getStock(water).count, is(stockSize));
+        }
+
+        @Test
+        public void 釣り銭が不足しているときに購入しようとしても釣り銭は変わらない() throws Exception {
+            Map<Integer, Integer> preChangeCoins = new HashMap<Integer, Integer>();
+            preChangeCoins.putAll(vendingMachine.getChangeStock());
+
+            vendingMachine.insert(500);
+            vendingMachine.purchase(water);
+            for (Integer coin : VendingMachine.acceptMoneys) {
+                assertThat(vendingMachine.getChangeStock().get(coin),
+                        is(preChangeCoins.get(coin)));
+            }
+        }
     }
 
     public static class 常に成立する条件 {
